@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dal\EFContextTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -105,10 +106,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InternetMagazine.DAL\InternetMagazine.DAL.csproj">
+      <Project>{4b921e9b-96a6-4436-8c6a-15c841cc9e5e}</Project>
+      <Name>InternetMagazine.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InternetMagazine\InternetMagazine.csproj">
       <Project>{BD46F2F5-CEEE-4913-8059-484D93582AB9}</Project>
       <Name>InternetMagazine</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
