@@ -9,6 +9,7 @@ namespace InternetMagazine.PL.Interfaces
         IEnumerable<ProductDTO> LoadProductsCategory(int? catId);
         IEnumerable<ProductDTO> Products();
         IEnumerable<CategoryDTO> Categories();
+        ProductDTO GetOneProduct(int id);
         void Dispose();
     }
 }

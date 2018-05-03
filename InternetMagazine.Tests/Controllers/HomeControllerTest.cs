@@ -20,7 +20,7 @@ namespace InternetMagazine.Tests.Controllers
             HomeController controller = new HomeController(mock.Object);
 
             // Act
-            ViewResult result = controller.Index(0) as ViewResult;
+            ViewResult result = controller.Index() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

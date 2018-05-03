@@ -13,16 +13,21 @@ namespace InternetMagazine.PL.Services
     public class CategoryService : ICategoryService
     {
         IUnitOfWork Db { get; set; }
+        IMapper categoryMap;
+        IMapper productMap;
+
         public CategoryService(IUnitOfWork uow)
         {
             Db = uow;
+
+            categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDTO>()).CreateMapper();
+            productMap = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
         }
 
         public IEnumerable<CategoryDTO> Categories()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Category>, List<CategoryDTO>>(Db.Categories.Get());
             
+            return categoryMap.Map<IEnumerable<Category>, List<CategoryDTO>>(Db.Categories.Get());
         }
 
         public IEnumerable<ProductDTO> LoadProductsCategory(int? catId)
@@ -31,15 +36,14 @@ namespace InternetMagazine.PL.Services
                 throw new ValidationException("Категории не существует","");
 
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Id);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+        
+            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products);
         }
 
         public IEnumerable<ProductDTO> Products()
         {
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Id);
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products);
         }
 
         public ProductDTO GetOneProduct(int id)
@@ -49,7 +53,7 @@ namespace InternetMagazine.PL.Services
             if (geted == null)
                 throw new ValidationException("Товара не существует", "");
 
-            return Mapper.Map<Product, ProductDTO>(geted);
+            return productMap.Map<Product, ProductDTO>(geted);
         }
 
         public static string CutText(string full_text)
