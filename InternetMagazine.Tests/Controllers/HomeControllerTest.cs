@@ -19,8 +19,10 @@ namespace InternetMagazine.Tests.Controllers
             mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
             HomeController controller = new HomeController(mock.Object);
 
+            int? id = 0;
+
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(id) as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

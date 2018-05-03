@@ -37,7 +37,7 @@ namespace InternetMagazine.PL.Services
 
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Id);
         
-            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products); 
         }
 
         public IEnumerable<ProductDTO> Products()
