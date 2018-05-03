@@ -1,24 +1,56 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿*{
+    margin:0;
+    padding:0;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .2);
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.bg-white {
+    background-color: #fff !important;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.nav-scroller .nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    margin-top: -1px;
+    overflow-x: auto;
+    color: rgba(255, 255, 255, .75);
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+    .nav-underline .active {
+    font-weight: 500;
+    color: #343a40;
+}
+
+.body-content{
+    margin-top:20px;
+}
+
+.pItem{
+    padding-top:1rem;
+    cursor:pointer;
+}
+
+.pItem:hover {
+    box-shadow: 0 0 2rem #343a40;
+}
+
+footer{
+    margin-top:20px;
 }

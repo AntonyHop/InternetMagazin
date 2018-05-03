@@ -7,37 +7,72 @@
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <string class="navbar-brand">
+                <i class="fa fa-book" aria-hidden="true"></i> BOOK STROE
+            </string>
+           
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                @if (ViewBag.CurrentPage == "Index"){ <li class="nav-item active"> <a class="nav-link" href="/">Главная</a></li>}
+                else{<li class="nav-item "><a class="nav-link" href="/">Главная</a></li>}
+                      
+                @if (ViewBag.CurrentPage == "About"){ <li class="nav-item active"> <a class="nav-link" href="/">О нас</a></li>}
+                else{<li class="nav-item "><a class="nav-link" href="/Home/About">О нас</a></li>}
+
+                @if (ViewBag.CurrentPage == "Contact"){ <li class="nav-item active"> <a class="nav-link" href="/">Контакты</a></li>}
+                else{<li class="nav-item "><a class="nav-link" href="/Home/Contact">Контакты</a></li>}
+
                 </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
+        </nav>
+        <div class="nav-scroller bg-white box-shadow">
+            <nav class="nav nav-underline">
+                @foreach (var cat in ViewBag.books)
+                {
+                    if (cat.Id == ViewBag.PageId)
+                    {
+                        <a class="nav-link active" href="/Home/Index/@cat.Id">@cat.Name</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link" href="/Home/Index/@cat.Id">@cat.Name</a>
+                    }
+                }
+            </nav>
         </div>
-    </div>
+    </header>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
+            <footer>
+                <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            </footer>
     </div>
+   
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+         $(function () {
+             $(".container .pItem").click(function () {
+                 window.location = "/home/ProductItem/" + $(this).data("item");
+             })
+         })
+    </script>
+
 </body>
 </html>

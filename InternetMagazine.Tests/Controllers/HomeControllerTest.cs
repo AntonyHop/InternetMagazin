@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using InternetMagazine;
 using InternetMagazine.Controllers;
+using InternetMagazine.PL.Interfaces;
+using InternetMagazine.PL.DTO;
+using Moq;
+using System.Collections.Generic;
 
 namespace InternetMagazine.Tests.Controllers
 {
@@ -16,10 +15,12 @@ namespace InternetMagazine.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var mock = new Mock<ICategoryService>();
+            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            HomeController controller = new HomeController(mock.Object);
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.Index(0) as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -29,7 +30,9 @@ namespace InternetMagazine.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var mock = new Mock<ICategoryService>();
+            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            HomeController controller = new HomeController(mock.Object);
 
             // Act
             ViewResult result = controller.About() as ViewResult;
@@ -42,7 +45,9 @@ namespace InternetMagazine.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var mock = new Mock<ICategoryService>();
+            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            HomeController controller = new HomeController(mock.Object);
 
             // Act
             ViewResult result = controller.Contact() as ViewResult;

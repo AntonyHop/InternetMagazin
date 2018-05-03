@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InternetMagazine.DAL.Entities
+namespace InternetMagazine.Models
 {
-    public class ProductDTO
+    public class ProductViewModel
     {
         public int Id { get; set; }
 
@@ -14,6 +14,6 @@ namespace InternetMagazine.DAL.Entities
 
         public int? CategoryId { get; set; }
         
-        public CategoryDTO Category { get; set; }
+        public CategoryViewModel Category { get; set; }
     }
 }
