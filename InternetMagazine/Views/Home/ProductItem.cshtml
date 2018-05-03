@@ -1,8 +1,10 @@
-﻿
+﻿@model InternetMagazine.Models.ProductViewModel
+
 @{
-    ViewBag.Title = "Продукты";
+    ViewBag.Title = "Продукт " + @Model.Name;
 }
 
-<h2>ProductItem</h2>
+
+<h2>@Model.Name</h2>
 
 

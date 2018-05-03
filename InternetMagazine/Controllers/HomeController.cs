@@ -82,11 +82,12 @@ namespace InternetMagazine.Controllers
 
             try{
                 toShowItem = svc.GetOneProduct(id.GetValueOrDefault());
-            }catch(ValidationException ex){
+
+                return View(productMap.Map<ProductDTO, ProductViewModel>(toShowItem));
+            }
+            catch(ValidationException ex){
                 return Redirect("/Home/Error");
             }
-
-            return View();
         }
 
         public ActionResult Error()
