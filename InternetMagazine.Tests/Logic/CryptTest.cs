@@ -9,7 +9,7 @@ namespace InternetMagazine.Tests.Logic
     public class CryptTest
     {
         [DataTestMethod]
-        [DataRow("Hallo World")]
+        [DataRow("AdminRoot")]
         [DataRow("2285")]
         [DataRow("Hallosdlkfashdkfhalshdfhalsf")]
 

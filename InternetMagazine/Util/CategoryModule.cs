@@ -10,6 +10,7 @@ namespace InternetMagazine.Util
         public override void Load()
         {
             Bind<ICategoryService>().To<CategoryService>();
+            Bind<IUserService>().To<UserService>();
         }
     }
 }

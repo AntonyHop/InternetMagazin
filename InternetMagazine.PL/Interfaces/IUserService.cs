@@ -9,7 +9,7 @@ namespace InternetMagazine.PL.Interfaces
         void RemoveUser(UserDTO user);
 
         void ChangeStatus(int id,string role);
-        void Login(string username, string passwort);
+        bool LoginVerify(string username, string passwort);
 
         IEnumerable<UserDTO> GetUsers();
         

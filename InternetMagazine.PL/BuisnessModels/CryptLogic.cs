@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
+
+[assembly: InternalsVisibleTo("InternetMagazine.Tests")]
 namespace InternetMagazine.PL.BuisnessModels
 {
-     public class CryptLogic:IDisposable
+    
+     internal class CryptLogic:IDisposable
         {
         MD5 _md5Hash = MD5.Create();
 
