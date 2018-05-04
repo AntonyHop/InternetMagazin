@@ -38,6 +38,8 @@
                 </form>
             </div>
         </nav>
+        @if (ViewBag.books != null)
+        {
         <div class="nav-scroller bg-white box-shadow">
             <nav class="nav nav-underline">
                 @foreach (var cat in ViewBag.books)
@@ -53,6 +55,7 @@
                 }
             </nav>
         </div>
+        }
     </header>
     <div class="container body-content">
         @RenderBody()

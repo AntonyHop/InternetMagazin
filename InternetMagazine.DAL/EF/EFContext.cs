@@ -23,7 +23,7 @@ namespace InternetMagazine.DAL.EF
     public class DataInitalizer : DropCreateDatabaseIfModelChanges<EFContext> {
         protected override void Seed(EFContext context)
         {
-            context.Users.Add(new User { NickName = "Admin", Password= "3b2077ec209a4a5d5b0d3c7d154e4cc5" });//AdminRoot
+            context.Users.Add(new User { NickName = "Admin", Password= "3b2077ec209a4a5d5b0d3c7d154e4cc5",Age=21, FirstName="Anton" });//AdminRoot
 
             context.Categories.Add(new Category { Name = "Без Ктегории" });
             context.Categories.Add(new Category { Name = "Фантастика" });

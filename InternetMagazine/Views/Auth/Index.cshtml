@@ -1,7 +1,46 @@
-﻿
+﻿@model InternetMagazine.Models.AuthViewModel
+
 @{
     ViewBag.Title = "Авторизация";
 }
 
-<h2>Index</h2>
+@{ 
+    string result = "Вы не авторизованы";
+    if (User.Identity.IsAuthenticated)
+    {
+        result = "Ваш логин: " + User.Identity.Name;
+    }
+}
+
+<h1>@result</h1>
+
+<div class="row d-flex flex-row justify-content-center">
+    <div class="col-md-5">
+        <form class="form-signin mb-lg-1 mt-lg-1" method="post">
+            @Html.AntiForgeryToken()
+            <div class="text-center mb-4">
+                <i class="fa fa-book h1" aria-hidden="true" style="font-size:5rem"></i>
+                <h1 class="h3 mb-3 font-weight-normal">Авторизация</h1>
+                <p>Авторизуйтесь чтобы иметь возможность покупать книги. Если у вас нет аккаунта то  <a href="/Auth/Regist/">заригестрируйтесь</a></p>
+            </div>
+
+            <div class="form-label-group mb-2">
+                @Html.EditorFor(Model => Model.NickName, new { htmlAttributes = new { @class = "form-control", @required = ""} })
+                @Html.ValidationMessageFor(model => model.NickName)
+                <label for="Nikname">Nikname</label>
+            </div>
+
+            <div class="form-label-group mb-2">
+                @Html.ValidationMessageFor(model => model.Password)
+                @Html.EditorFor(Model => Model.Password, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                <label for="inputPassword">Password</label>
+            </div>
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Зайти</button>
+            <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
+        </form>
+    </div>
+</div>
+
 

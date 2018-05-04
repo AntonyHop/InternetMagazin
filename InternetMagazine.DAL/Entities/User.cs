@@ -7,24 +7,23 @@ namespace InternetMagazine.DAL.Entities
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string FirstName { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string LastName { get; set; }
 
         [MaxLength(20)]
         public string Email { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         [Required]
         public string NickName { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(255)]
         [Required]
         public string Password { get; set; }
 
-        [MaxLength(3)]
         public int Age { get; set; }
 
         [MaxLength(50)]

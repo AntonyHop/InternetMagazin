@@ -24,6 +24,7 @@ namespace InternetMagazine.PL.Services
             Db = _db;
 
             DtoToUser = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO,User>()).CreateMapper();
+            UserToDto = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO > ()).CreateMapper();
 
         }
 
@@ -31,11 +32,13 @@ namespace InternetMagazine.PL.Services
         {
             User curr = Db.Users.Get(u => u.Id == id).LastOrDefault();
             if (curr == null)
+            {
                 throw new UserNotFoundExaption("Пользователь не найден", "UserService");
-
-            curr.Role = role;
-
-            Db.Users.Update(curr);
+            }else{
+                curr.Role = role;
+                Db.Users.Update(curr);
+            }
+            
         }
 
         public IEnumerable<UserDTO> GetUsers()
@@ -43,22 +46,29 @@ namespace InternetMagazine.PL.Services
             IEnumerable <User> users = Db.Users.Get();
 
             if (users == null || users.Count() == 0)
-                throw new UserNotFoundExaption("Пользователь не найден","UserService");
-
-            return DtoToUser.Map< IEnumerable<User>, List<UserDTO>>(users);
+            {
+                throw new UserNotFoundExaption("Пользователь не найден", "UserService");
+            }
+            else
+            {
+                return DtoToUser.Map<IEnumerable<User>, List<UserDTO>>(users);
+            }    
+           
         }
 
         public bool LoginVerify(string username, string passwort)
         {
-            User curr = Db.Users.Get(u => u.NickName == username).LastOrDefault();
-
+            User curr = Db.Users.Get(u => u.NickName == username).FirstOrDefault();
             if (curr == null)
+            {
                 new UserNotFoundExaption("Пользователь не зарегестрирован", "UserService");
 
-            passwort = Crypt.GetMd5Hash(passwort);
-            if(passwort == curr.Password)
-            {
-                return true;
+            }else{
+                passwort = Crypt.GetMd5Hash(passwort);
+                if (passwort == curr.Password)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -67,20 +77,28 @@ namespace InternetMagazine.PL.Services
         {
             User curr = Db.Users.Get(u => u.NickName == user.NickName).LastOrDefault();
             if(curr != null)
+            {
                 throw new UserNotFoundExaption("Пользователь c таким ником уже зарегестрирован", "UserService");
+            }
+            else
+            {
+                curr = DtoToUser.Map<UserDTO, User>(user);
+                Db.Users.Create(curr);
+            }
 
-            curr = DtoToUser.Map<UserDTO, User>(user);
-
-            Db.Users.Create(curr);
         }
 
         public void RemoveUser(UserDTO user)
         {
             User curr = Db.Users.Get(u => u.Id == user.Id).LastOrDefault();
             if (curr == null)
+            {
                 throw new UserNotFoundExaption("Пользователь не найден", "UserService");
-
-            Db.Users.Remove(curr);
+            }
+            else
+            {
+                Db.Users.Remove(curr);
+            }
         }
     }
 }
