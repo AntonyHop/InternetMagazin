@@ -14,7 +14,7 @@ namespace InternetMagazine.Tests.Dal
 
         IGenericRepository<Product> rep;
         EFContext ctx = new EFContext(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=InternetMagazine;Integrated Security=True");
-        Product tp = new Product() {Name = "Test", Desc = "Test", CategoryId = 1, Price = 150 };
+        Product tp = new Product() {Name = "Test1", Desc = "Test", CategoryId = 1, Price = 228.50M };
 
         [TestInitialize]
         public void Setup()
@@ -28,9 +28,13 @@ namespace InternetMagazine.Tests.Dal
             try
             {
                 rep.Create(tp);
+                tp = new Product() { Name = "Test2", Desc = "Test", CategoryId = 1, Price = 228.55M };
+                rep.Create(tp);
+                tp = new Product() { Name = "Test3", Desc = "Test", CategoryId = 1, Price = 228M };
+                rep.Create(tp);
 
-                
-            }catch(Exception ex){
+            }
+            catch(Exception ex){
                 Assert.Fail(ex.Message);
             }
 
