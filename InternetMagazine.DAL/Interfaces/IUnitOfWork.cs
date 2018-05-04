@@ -9,5 +9,6 @@ namespace InternetMagazine.DAL.Interfaces
     {
         GenericRepository<Category> Categories { get; }
         GenericRepository<Product> Products { get; }
+        GenericRepository<User> Users { get; }
     }
 }

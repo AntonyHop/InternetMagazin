@@ -8,6 +8,8 @@ namespace InternetMagazine.PL.DTO
 
         public string Name { get; set; }
 
+        public string Author { get; set; }
+
         public string Desc { get; set; }
 
         public decimal Price { get; set; }
@@ -15,5 +17,7 @@ namespace InternetMagazine.PL.DTO
         public int? CategoryId { get; set; }
         
         public CategoryDTO Category { get; set; }
+
+        public string ImgUrl { get; set; }
     }
 }

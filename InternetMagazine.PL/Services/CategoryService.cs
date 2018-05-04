@@ -33,7 +33,7 @@ namespace InternetMagazine.PL.Services
         public IEnumerable<ProductDTO> LoadProductsCategory(int? catId)
         {
             if (catId == null) 
-                throw new ValidationException("Категории не существует","");
+                throw new ValidationException("Категории не существует", "CategoryService");
 
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Id);
         
@@ -51,7 +51,7 @@ namespace InternetMagazine.PL.Services
             Product geted = Db.Products.Get(p => p.Id == id).LastOrDefault();
 
             if (geted == null)
-                throw new ValidationException("Товара не существует", "");
+                throw new ValidationException("Товара не существует", "CategoryService");
 
             return productMap.Map<Product, ProductDTO>(geted);
         }

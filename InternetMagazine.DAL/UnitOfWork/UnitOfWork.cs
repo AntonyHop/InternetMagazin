@@ -11,6 +11,7 @@ namespace InternetMagazine.DAL.UnitOfWork
         private EFContext ctx;
         private GenericRepository<Category> _categories;
         private GenericRepository<Product> _products;
+        private GenericRepository<User> _users;
 
         public UnitOfWork(string Connection)
         {
@@ -32,6 +33,16 @@ namespace InternetMagazine.DAL.UnitOfWork
                 if (_products == null)
                     _products = new GenericRepository<Product>(ctx);
                 return _products;
+            }
+        }
+
+        public GenericRepository<User> Users
+        {
+            get
+            {
+                if (_users == null)
+                    _users = new GenericRepository<User>(ctx);
+                return _users;
             }
         }
 

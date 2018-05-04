@@ -8,6 +8,7 @@ namespace InternetMagazine.DAL.EF
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public EFContext(string connection) : base(connection)
         {   
@@ -22,6 +23,8 @@ namespace InternetMagazine.DAL.EF
     public class DataInitalizer : DropCreateDatabaseIfModelChanges<EFContext> {
         protected override void Seed(EFContext context)
         {
+            context.Users.Add(new User { NickName = "Admin", Password="1111" });
+
             context.Categories.Add(new Category { Name = "Без Ктегории" });
             context.Categories.Add(new Category { Name = "Фантастика" });
 

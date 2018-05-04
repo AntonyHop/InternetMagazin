@@ -11,6 +11,8 @@ namespace InternetMagazine.DAL.Entities
         [Required]
         public string Name { get; set; }
 
+        public string Author { get; set; }
+
         [MaxLength(255)]
         public string Desc { get; set; }
 
@@ -19,5 +21,8 @@ namespace InternetMagazine.DAL.Entities
         public int? CategoryId { get; set; }
         
         public Category Category { get; set; }
+
+        [MaxLength(50)]
+        public string ImgUrl { get; set; }
     }
 }
