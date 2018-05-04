@@ -14,20 +14,26 @@ namespace InternetMagazine.Controllers
     {
         IUserService USvc;
         IMapper ViewToDto;
+        IMapper DtoToView;
         public AuthController(IUserService _svc)
         {
             USvc = _svc;
 
             ViewToDto = new MapperConfiguration(cfg => cfg.CreateMap<RegistViewModel, UserDTO>()).CreateMapper();
+            DtoToView = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, RegistViewModel > ()).CreateMapper();
         }
         // GET: Auth
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/Account");
             return View();
         }
 
         public ActionResult Regist()
         {
+            if (User.Identity.IsAuthenticated)
+                return Redirect("/Account");
             return View();
         }
 
@@ -71,7 +77,7 @@ namespace InternetMagazine.Controllers
                 if (state)
                 {
                     FormsAuthentication.SetAuthCookie(model.NickName, true);
-                    return Redirect("/Auth/Account");
+                    return Redirect("/Account");
                 }
                 else
                 {

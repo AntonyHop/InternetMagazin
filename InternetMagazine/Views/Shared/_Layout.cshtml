@@ -25,11 +25,15 @@
                 @if (ViewBag.CurrentPage == "Index"){ <li class="nav-item active"> <a class="nav-link" href="/">Главная</a></li>}
                 else{<li class="nav-item "><a class="nav-link" href="/">Главная</a></li>}
                       
-                @if (ViewBag.CurrentPage == "About"){ <li class="nav-item active"> <a class="nav-link" href="/">О нас</a></li>}
+                @if (ViewBag.CurrentPage == "About"){ <li class="nav-item active"> <a class="nav-link" href="/Home/About">О нас</a></li>}
                 else{<li class="nav-item "><a class="nav-link" href="/Home/About">О нас</a></li>}
 
-                @if (ViewBag.CurrentPage == "Contact"){ <li class="nav-item active"> <a class="nav-link" href="/">Контакты</a></li>}
+                @if (ViewBag.CurrentPage == "Contact"){ <li class="nav-item active"> <a class="nav-link" href="/Home/Contact">Контакты</a></li>}
                 else{<li class="nav-item "><a class="nav-link" href="/Home/Contact">Контакты</a></li>}
+
+                @if (ViewBag.CurrentPage == "Account")
+                {<li class="nav-item active"> <a class="nav-link" href="/Auth">Аккакунт</a></li>}
+                else{<li class="nav-item "><a class="nav-link" href="/Auth">Аккаунт</a></li>}
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

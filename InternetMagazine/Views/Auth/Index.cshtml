@@ -4,15 +4,6 @@
     ViewBag.Title = "Авторизация";
 }
 
-@{ 
-    string result = "Вы не авторизованы";
-    if (User.Identity.IsAuthenticated)
-    {
-        result = "Ваш логин: " + User.Identity.Name;
-    }
-}
-
-<h1>@result</h1>
 
 <div class="row d-flex flex-row justify-content-center">
     <div class="col-md-5">

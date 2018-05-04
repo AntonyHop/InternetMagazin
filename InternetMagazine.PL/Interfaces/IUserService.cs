@@ -12,7 +12,9 @@ namespace InternetMagazine.PL.Interfaces
         bool LoginVerify(string username, string passwort);
 
         IEnumerable<UserDTO> GetUsers();
-        
+        UserDTO getUserByName(string name);
+
+
 
 
     }

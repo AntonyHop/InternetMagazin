@@ -53,7 +53,19 @@ namespace InternetMagazine.PL.Services
             {
                 return DtoToUser.Map<IEnumerable<User>, List<UserDTO>>(users);
             }    
-           
+        }
+
+        public UserDTO getUserByName(string name)
+        {
+            User curr = Db.Users.Get(u => u.NickName == name).LastOrDefault();
+            if(curr == null)
+            {
+                throw new UserNotFoundExaption("Пользователь не найден", "UserService");
+            }
+            else
+            {
+                return DtoToUser.Map<User, UserDTO>(curr);
+            }
         }
 
         public bool LoginVerify(string username, string passwort)
