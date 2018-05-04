@@ -34,20 +34,26 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult Regist(RegistViewModel model)
         {
-            UserDTO newUser = ViewToDto.Map<RegistViewModel, UserDTO>(model);
-            try
+            
+            if(model.Password == model.ConfirmPassword)
             {
-                USvc.RegistUser(newUser);
-                FormsAuthentication.SetAuthCookie(model.NickName, true);
-                return Redirect("/");
+                UserDTO newUser = ViewToDto.Map<RegistViewModel, UserDTO>(model);
+                try
+                {
+                    USvc.RegistUser(newUser);
+                    FormsAuthentication.SetAuthCookie(model.NickName, true);
+                    return Redirect("/");
+                }
+                catch (UserNotFoundExaption ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
             }
-            catch(UserNotFoundExaption ex)
+            else
             {
-                ModelState.AddModelError("", ex.Message);
+                ModelState.AddModelError("AuthController", "Подтвердите пароль");
             }
             return View(model);
-
-
         }
 
         [HttpPost]
@@ -60,16 +66,16 @@ namespace InternetMagazine.Controllers
                 try { state = USvc.LoginVerify(model.NickName, model.Password); }
                 catch(UserNotFoundExaption ex)
                 {
-                    ModelState.AddModelError("", ex.Message);
+                    ModelState.AddModelError(ex.Property, ex.Message);
                 }
                 if (state)
                 {
                     FormsAuthentication.SetAuthCookie(model.NickName, true);
-                    return Redirect("/");
+                    return Redirect("/Auth/Account");
                 }
                 else
                 {
-                    ModelState.AddModelError("Nikname", "Пользователь с таким логином уже существует");
+                    ModelState.AddModelError("AuthController", "Вы не верно ввели пароль");
                 }
             }
             return View(model);
