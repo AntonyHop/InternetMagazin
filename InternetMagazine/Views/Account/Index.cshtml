@@ -1,9 +1,10 @@
 ﻿@model InternetMagazine.Models.RegistViewModel
 @{
     ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1>Пользователь @Model.FirstName @Model.LastName</h1>
+</div>
 
-<h2>@Model.NickName @Model.FirstName @Model.LastName</h2>
-
-<a href="/Auth/Logout" class="btn btn-danger">Выйти</a>
 

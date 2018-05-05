@@ -61,30 +61,32 @@
         </div>
         }
     </header>
-    <div class="container body-content">
         @RenderBody()
+     
+        <div class="container">
+
             <footer>
                 <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
             </footer>
-    </div>
-    
-    <div class="Errors">
-        @{
-            foreach (ModelState modelState in ViewData.ModelState.Values)
-            {
-                foreach (ModelError error in modelState.Errors)
+        </div>
+
+        <div class="Errors">
+            @{
+                foreach (ModelState modelState in ViewData.ModelState.Values)
                 {
-                    <div class="alert alert-danger" role="alert">
-                        @error.ErrorMessage
-                    </div>
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @error.ErrorMessage
+                        </div>
+                    }
                 }
             }
-        }
-    </div>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/App.js")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Scripts/App.js")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

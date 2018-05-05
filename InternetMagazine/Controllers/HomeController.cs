@@ -30,7 +30,7 @@ namespace InternetMagazine.Controllers
             categories.Insert(0, new CategoryDTO() { Id = 0, Name = "Все категории" });
 
             var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
-            ViewBag.books = categories;
+            ViewBag.books = ct;
 
         } 
         public ActionResult Index(int? id)

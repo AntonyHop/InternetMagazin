@@ -61,3 +61,12 @@
 footer{
     margin-top:20px;
 }
+
+.operation{
+    cursor:pointer;
+    color:#074180;
+}
+
+.operation t:hover {
+    text-decoration:underline;
+}

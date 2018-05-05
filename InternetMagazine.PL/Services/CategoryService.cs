@@ -74,5 +74,54 @@ namespace InternetMagazine.PL.Services
         {
             Db.Dispose();
         }
+
+        public void AddCategory(string name)
+        {
+            Db.Categories.Create(new Category() { Name = name });
+        }
+
+        public void EditCategory(int id, string name)
+        {
+
+            Category geted = Db.Categories.Get(c => c.Id == id).FirstOrDefault();
+            if (geted == null)
+            {
+                throw new ValidationException("Категории нет", "CategoryService");
+            }else if (geted.Name == name) {
+                throw new ValidationException("Зачем чтото менять и так хорошо", "CategoryService");
+            }
+            else {
+                geted.Name = name;
+                Db.Categories.Update(geted);
+            }   
+
+        }
+
+        public void DeleteCategory(int id)
+        {
+
+            Category geted = Db.Categories.Get(c => c.Id == id).FirstOrDefault();
+
+            if (geted == null)
+            {
+                throw new ValidationException("Категории нет", "CategoryService");
+            }
+            else
+            {
+                IEnumerable<Product> prbycat = Db.Products.Get(P => P.CategoryId == id);
+
+                if(prbycat.Count() > 0)
+                {
+                    foreach(Product p in prbycat)
+                    {
+                        p.CategoryId = 1;
+                        Db.Products.Update(p);
+                    }
+                }
+
+                Db.Categories.Remove(geted);
+            }
+
+        }
     }
 }

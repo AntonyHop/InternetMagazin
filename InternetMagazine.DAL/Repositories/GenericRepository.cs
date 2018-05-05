@@ -45,7 +45,7 @@ namespace InternetMagazine.DAL.Repositories
 
         public void Remove(TEntity item)
         {
-            _dbSet.Remove(item);
+            _ctx.Entry(item).State = EntityState.Deleted;
             _ctx.SaveChanges();
         }
 
