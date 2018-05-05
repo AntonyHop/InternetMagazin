@@ -7,7 +7,7 @@
 
 <div class="row d-flex flex-row justify-content-center">
     <div class="col-md-5">
-        <form class="form-signin mb-lg-1 mt-lg-1" method="post">
+        <form class="form-signin mb-lg-1 mt-lg-1 ValidThisForm" method="post">
             @Html.AntiForgeryToken()
             <div class="text-center mb-4">
                 <i class="fa fa-book h1" aria-hidden="true" style="font-size:5rem"></i>
@@ -16,19 +16,19 @@
             </div>
 
             <div class="form-label-group mb-2">
-                @Html.EditorFor(Model => Model.NickName, new { htmlAttributes = new { @class = "form-control", @required = ""} })
+                @Html.EditorFor(Model => Model.NickName, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.NickName)
                 <label for="Nikname">Nikname</label>
             </div>
 
             <div class="form-label-group mb-2">
                 @Html.ValidationMessageFor(model => model.Password)
-                @Html.EditorFor(Model => Model.Password, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                @Html.EditorFor(Model => Model.Password, new { htmlAttributes = new { @class = "form-control"} })
                 <label for="inputPassword">Password</label>
             </div>
 
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Зайти</button>
+            <button class="btn btn-lg btn-primary btn-block submiThis" type="button">Зайти</button>
             <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
         </form>
     </div>

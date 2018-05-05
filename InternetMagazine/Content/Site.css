@@ -51,6 +51,13 @@
     box-shadow: 0 0 2rem #343a40;
 }
 
+.Errors {
+    width: 300px;
+    position: absolute;
+    top: 80px;
+    right: 10px;
+}
+ 
 footer{
     margin-top:20px;
 }

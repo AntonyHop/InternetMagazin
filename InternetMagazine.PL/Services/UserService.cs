@@ -73,7 +73,7 @@ namespace InternetMagazine.PL.Services
             User curr = Db.Users.Get(u => u.NickName == username).FirstOrDefault();
             if (curr == null)
             {
-                new UserNotFoundExaption("Пользователь не зарегестрирован", "UserService");
+                throw new UserNotFoundExaption("Пользователь не зарегестрирован", "UserService");
 
             }else{
                 passwort = Crypt.GetMd5Hash(passwort);
