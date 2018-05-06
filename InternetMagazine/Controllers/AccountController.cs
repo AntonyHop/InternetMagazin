@@ -18,6 +18,9 @@ namespace InternetMagazine.Controllers
         IMapper DtoToView;
         IMapper productMap;
         IMapper categoryMap;
+        IMapper productMapRev;
+
+        IEnumerable<CategoryDTO> categories;
 
         public AccountController(ICategoryService _csvc, IUserService _usvc)
         {
@@ -27,7 +30,10 @@ namespace InternetMagazine.Controllers
             ViewToDto = new MapperConfiguration(cfg => cfg.CreateMap<RegistViewModel, UserDTO>()).CreateMapper();
             DtoToView = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, RegistViewModel>()).CreateMapper();
             productMap = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+            productMapRev = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, ProductDTO > ()).CreateMapper();
             categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
+
+            categories = CSvc.Categories();
         }
 
         public ActionResult Index()
@@ -45,28 +51,24 @@ namespace InternetMagazine.Controllers
         [HttpGet]
         public ActionResult Categories()
         {
-            IEnumerable<CategoryDTO> categories = CSvc.Categories();
             var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
-
-
             return View(ct);
         }
 
         [HttpPost]
         public ActionResult Categories(int id, string name, string mode)
         {
-           
             if(mode == "add"){
                 try{
                     CSvc.AddCategory(name);
                 }catch(ValidationException ex){
-                    ModelState.AddModelError(ex.Message, ex.Property);
+                    return Json(ex.Message);
                 }
             }else if (mode == "edit"|| name != ""){
                 try {
                     CSvc.EditCategory(id,name);
                 }catch (ValidationException ex){
-                    ModelState.AddModelError(ex.Message, ex.Property);
+                    return Json(ex.Message);
                 }
             }else if (mode == "delete"){
                 try{
@@ -80,9 +82,49 @@ namespace InternetMagazine.Controllers
                     return Json("no");
                 }
             }
-
             return Json("ok");
-
         }
+
+        public ActionResult Products()
+        {
+            IEnumerable<ProductDTO> prod = CSvc.Products();
+            IEnumerable<ProductViewModel>  productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
+
+            return View(productsvm);
+        }
+
+        public ActionResult CreateProduct()
+        {
+            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            ViewBag.categories = ct;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct(ProductViewModel view)
+        {
+            
+            if (view.File != null)
+            {
+                if(view.File.ContentType == "image/jpeg")
+                {
+                    // получаем имя файла
+                    DateTime dt = new DateTime();
+                    
+                    string filename = DateTime.Now.ToString("ddMMMMyyyyHHmmss")+".jpg";
+                    string path = "/Images/tmp/" + filename;
+                    // сохраняем файл в папку Files в проекте
+                    view.File.SaveAs(Server.MapPath(path));
+                    view.ImgUrl = path;
+                }
+               
+            }
+
+            ProductDTO ToSend = productMapRev.Map<ProductViewModel,ProductDTO>(view);
+
+            CSvc.AddProduct(ToSend);
+            return Redirect("/Account/Products");
+        }
+
     }
 }

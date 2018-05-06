@@ -264,6 +264,8 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Account\Categories.cshtml" />
+    <Content Include="Views\Account\Products.cshtml" />
+    <Content Include="Views\Account\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

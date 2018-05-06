@@ -14,6 +14,8 @@ namespace InternetMagazine.PL.Interfaces
         void AddCategory(string name);
         void DeleteCategory(int id);
 
+        void AddProduct(ProductDTO pr);
+
         void Dispose();
     }
 }

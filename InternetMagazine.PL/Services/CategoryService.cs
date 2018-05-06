@@ -15,6 +15,7 @@ namespace InternetMagazine.PL.Services
         IUnitOfWork Db { get; set; }
         IMapper categoryMap;
         IMapper productMap;
+        IMapper productMapRev;
 
         public CategoryService(IUnitOfWork uow)
         {
@@ -22,6 +23,7 @@ namespace InternetMagazine.PL.Services
 
             categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDTO>()).CreateMapper();
             productMap = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
+            productMapRev = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
         }
 
         public IEnumerable<CategoryDTO> Categories()
@@ -79,6 +81,14 @@ namespace InternetMagazine.PL.Services
         {
             Db.Categories.Create(new Category() { Name = name });
         }
+
+        public void AddProduct(ProductDTO pr)
+        {
+            var Product = productMapRev.Map<ProductDTO,Product>(pr);
+            Db.Products.Create(Product);
+        }
+      
+        
 
         public void EditCategory(int id, string name)
         {

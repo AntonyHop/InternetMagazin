@@ -13,7 +13,7 @@ $(function () {
 
     $(".submiThis").click(function () {
         var send = true;
-        $(".ValidThisForm input[type=text], .ValidThisForm input[type=password], .ValidThisForm input[type=tel]").each(function () {
+        $(".ValidThisForm input[type=text], .ValidThisForm input[type=password], .ValidThisForm input[type=tel], .ValidThisForm input[type=number]").each(function () {
             if ($(this).val() == "") {
                 $(this).addClass("is-invalid");
                 send = false;

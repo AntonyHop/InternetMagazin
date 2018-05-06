@@ -42,7 +42,7 @@ namespace InternetMagazine.Controllers
             if (id != null && id > 0)
             {
                IEnumerable<ProductDTO> prod = svc.LoadProductsCategory(id);
-                productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
+               productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = id;
             }else{
                 IEnumerable<ProductDTO> prod = svc.Products();
