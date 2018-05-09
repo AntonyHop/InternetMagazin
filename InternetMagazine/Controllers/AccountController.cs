@@ -101,6 +101,7 @@ namespace InternetMagazine.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult RemoveProduct(int? id)
         {
             if (id != null)
@@ -110,9 +111,10 @@ namespace InternetMagazine.Controllers
                 }catch(ValidationException ex)
                 {
                     ModelState.AddModelError(ex.Property, ex.Message);
+                    return Content(ex.Message);
                 }
             }
-            return View();
+            return Content("done");
            
         }
 

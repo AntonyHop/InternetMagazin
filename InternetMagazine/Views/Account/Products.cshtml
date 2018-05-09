@@ -53,20 +53,20 @@
             @Html.DisplayFor(modelItem => item.Category.Name)
         </td>
         <td>
-            @if(item.ImgUrl != "")
+            @if(item.ImgUrl != null)
             {
                 <img src="@item.ImgUrl" width="150"/>
             }
             else
             {
-                <p>Нет изображения</p>
+                <span>Нет изображения</span>
             }
 
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a class="operation" href="/Home/ProductItem/@item.Id">Детали</a> |
+            <span class="operation deleteProduct" data-id="@item.Id">Удалить</span> |
         </td>
     </tr>
 }

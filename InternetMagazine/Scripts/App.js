@@ -122,14 +122,25 @@ $(function () {
             });
     });
 
-    $(".deleteProduct").click(function () {
-        $.post("/Account/DeleteProduct/" + $(this).data("id"), function (data) {
-            if (data == "done") {
-                swal("Отлично", "Категория удалена", "success");
-            } else {
-                swal("Плохо", "Категория не удалена", "error");
+    $("table .deleteProduct").click(function () {
+        elem = $(this);
+        swal({
+            title: "Удалить текущий товар?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.get("/Account/RemoveProduct/" + $(this).data("id"), function (data) {
+                    if (data == "done") {
+                        swal("Отлично", "Товар удален", "success");
+                        $(elem).parent().parent().hide();
+                    } else {
+                        swal("Товар не удален", data, "error");
+                    }
+                })
             }
-        })
-        
+
+        });
     });
 });
