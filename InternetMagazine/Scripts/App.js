@@ -21,7 +21,7 @@ $(function () {
                 $(this).removeClass("is-invalid");
             }
         });
-        console.log(send);
+       
         if (send) {
             $(".ValidThisForm").submit();
         }
@@ -120,5 +120,16 @@ $(function () {
 
                 }
             });
+    });
+
+    $(".deleteProduct").click(function () {
+        $.post("/Account/DeleteProduct/" + $(this).data("id"), function (data) {
+            if (data == "done") {
+                swal("Отлично", "Категория удалена", "success");
+            } else {
+                swal("Плохо", "Категория не удалена", "error");
+            }
+        })
+        
     });
 });

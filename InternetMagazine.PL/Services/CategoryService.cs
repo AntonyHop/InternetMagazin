@@ -79,11 +79,22 @@ namespace InternetMagazine.PL.Services
 
         public void AddCategory(string name)
         {
-            Db.Categories.Create(new Category() { Name = name });
+            if (name.Length <= 20)
+            {
+                Db.Categories.Create(new Category() { Name = name });
+            }
+            else
+                throw new ValidationException("Слижком большое название категории","Category service");
+           
         }
 
         public void AddProduct(ProductDTO pr)
         {
+            if(pr.Name.Length > 20)
+                throw new ValidationException("Слижком большое название товара", "Category service");
+            if (pr.Desc.Length > 255)
+                throw new ValidationException("Слижком большое описание товара", "Category service");
+
             var Product = productMapRev.Map<ProductDTO,Product>(pr);
             Db.Products.Create(Product);
         }
@@ -107,7 +118,19 @@ namespace InternetMagazine.PL.Services
 
         }
 
-        public void DeleteCategory(int id)
+        public void DeleteProduct(int? id)
+        {
+
+            Product geted = Db.Products.Get(c => c.Id == id).FirstOrDefault();
+
+            if (geted == null)
+            {
+                throw new ValidationException("Товара нет", "CategoryService");
+            }
+            Db.Products.Remove(geted);
+        }
+
+            public void DeleteCategory(int id)
         {
 
             Category geted = Db.Categories.Get(c => c.Id == id).FirstOrDefault();

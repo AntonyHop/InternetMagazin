@@ -7,8 +7,10 @@ namespace InternetMagazine.Models
     {
         public int Id { get; set; }
 
+        [DataType(DataType.Text)]
         public string Name { get; set; }
 
+        [DataType(DataType.Text)]
         public string Author { get; set; }
 
         [DataType(DataType.MultilineText)]

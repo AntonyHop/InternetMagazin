@@ -49,20 +49,14 @@
         <div class="form-group">
             <span class="control-label col-md-2">Категория</span>
             <div class="col-md-10">
-                <select class="form-control" name="CategoryId" value="1">
-
-                    @foreach (var item in ViewBag.categories)
-                    {
-                        if (item.Id == 1)
-                        {
-                            <option value="@item.Id" selected>@item.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@item.Id">@item.Name</option>
-                        }
-                    }
-                </select>
+               <select name="CategoryId" class="form-control">
+                   @foreach(var cat in ViewBag.categories)
+                   {
+                       <option value="@cat.Id">@cat.Name</option>
+                   }
+               </select>
+                
+                  
             </div>
         </div>
 

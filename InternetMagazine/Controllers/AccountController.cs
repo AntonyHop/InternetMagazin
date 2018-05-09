@@ -5,6 +5,7 @@ using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.DTO;
 using InternetMagazine.Models;
 using InternetMagazine.PL.Infrastructure;
+using InternetMagazine.Util;
 using AutoMapper;
 
 namespace InternetMagazine.Controllers
@@ -100,10 +101,27 @@ namespace InternetMagazine.Controllers
             return View();
         }
 
+        public ActionResult RemoveProduct(int? id)
+        {
+            if (id != null)
+            {
+                try {
+                    CSvc.DeleteProduct(id);
+                }catch(ValidationException ex)
+                {
+                    ModelState.AddModelError(ex.Property, ex.Message);
+                }
+            }
+            return View();
+           
+        }
+
         [HttpPost]
         public ActionResult CreateProduct(ProductViewModel view)
         {
-            
+            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            ViewBag.categories = ct;
+
             if (view.File != null)
             {
                 if(view.File.ContentType == "image/jpeg")
@@ -121,9 +139,17 @@ namespace InternetMagazine.Controllers
             }
 
             ProductDTO ToSend = productMapRev.Map<ProductViewModel,ProductDTO>(view);
-
-            CSvc.AddProduct(ToSend);
-            return Redirect("/Account/Products");
+            try
+            {
+                CSvc.AddProduct(ToSend);
+                return Redirect("/Account/Products");
+            }
+            catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return View(view);
+            
         }
 
     }
