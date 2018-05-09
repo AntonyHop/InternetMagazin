@@ -48,14 +48,43 @@ namespace InternetMagazine.PL.Services
             return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products);
         }
 
-        public ProductDTO GetOneProduct(int id)
+        public ProductDTO GetOneProduct(int? id)
         {
-            Product geted = Db.Products.Get(p => p.Id == id).LastOrDefault();
+            if(id != null)
+            {
+                Product geted = Db.Products.Get(p => p.Id == id).LastOrDefault();
 
-            if (geted == null)
+                if (geted == null)
+                    throw new ValidationException("Товара не существует", "CategoryService");
+
+                return productMap.Map<Product, ProductDTO>(geted);
+            }
+            else
+            {
                 throw new ValidationException("Товара не существует", "CategoryService");
+            }
+           
+        }
 
-            return productMap.Map<Product, ProductDTO>(geted);
+        public void UpdateOneProduct(ProductDTO p)
+        {
+
+            if (p.Name.Length > 20)
+                throw new ValidationException("Слижком большое название товара", "Category service");
+            if (p.Desc.Length > 255)
+                throw new ValidationException("Слижком большое описание товара", "Category service");
+
+            Product geted = Db.Products.Get(c => c.Id == p.Id).FirstOrDefault();
+          
+            if (geted != null)
+            {
+                Db.Products.Update(productMapRev.Map<ProductDTO, Product>(p));
+            }
+            else
+            {
+                throw new ValidationException("Товара не существует", "CategoryService");
+            }
+
         }
 
         public static string CutText(string full_text)

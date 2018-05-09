@@ -9,12 +9,13 @@ namespace InternetMagazine.PL.Interfaces
         IEnumerable<ProductDTO> LoadProductsCategory(int? catId);
         IEnumerable<ProductDTO> Products();
         IEnumerable<CategoryDTO> Categories();
-        ProductDTO GetOneProduct(int id);
+        ProductDTO GetOneProduct(int? id);
         void EditCategory(int id, string name);
         void AddCategory(string name);
         void DeleteCategory(int id);
 
         void AddProduct(ProductDTO pr);
+        void UpdateOneProduct(ProductDTO p);
         void DeleteProduct(int? id);
 
         void Dispose();

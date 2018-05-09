@@ -1,4 +1,5 @@
-﻿@model IEnumerable<InternetMagazine.Models.ProductViewModel>
+﻿@using InternetMagazine.PL.Services;
+@model IEnumerable<InternetMagazine.Models.ProductViewModel>
 
 @{
     ViewBag.Title = "Products";
@@ -64,7 +65,7 @@
 
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            <a class="operation" href="/Account/EditProduct/@item.Id">Изменить</a> |
             <a class="operation" href="/Home/ProductItem/@item.Id">Детали</a> |
             <span class="operation deleteProduct" data-id="@item.Id">Удалить</span> |
         </td>

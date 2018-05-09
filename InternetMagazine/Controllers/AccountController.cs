@@ -98,7 +98,38 @@ namespace InternetMagazine.Controllers
         {
             var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
+            ViewBag.Edit = false;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct(ProductViewModel view)
+        {
+            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            ViewBag.categories = ct;
+            ViewBag.CurrId = 1;
+            ViewBag.Edit = false;
+
+            try
+            {
+                view.ImgUrl = LoadLogic.UploadLogic(view.File, Server);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.Message);
+            }
+            ProductDTO ToSend = productMapRev.Map<ProductViewModel, ProductDTO>(view);
+            try
+            {
+                CSvc.AddProduct(ToSend);
+                return Redirect("/Account/Products");
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+            return View(view);
+
         }
 
         [HttpGet]
@@ -118,40 +149,60 @@ namespace InternetMagazine.Controllers
            
         }
 
-        [HttpPost]
-        public ActionResult CreateProduct(ProductViewModel view)
+        public ActionResult EditProduct(int? id)
         {
             var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
+            ViewBag.Edit = true;
 
-            if (view.File != null)
+            try
             {
-                if(view.File.ContentType == "image/jpeg")
-                {
-                    // получаем имя файла
-                    DateTime dt = new DateTime();
-                    
-                    string filename = DateTime.Now.ToString("ddMMMMyyyyHHmmss")+".jpg";
-                    string path = "/Images/tmp/" + filename;
-                    // сохраняем файл в папку Files в проекте
-                    view.File.SaveAs(Server.MapPath(path));
-                    view.ImgUrl = path;
-                }
+                ProductDTO product = CSvc.GetOneProduct(id);
+                ProductViewModel vProduct = productMap.Map<ProductDTO, ProductViewModel>(product);
+                ViewBag.CurrId = product.CategoryId;
+
+                return View("CreateProduct", vProduct);
+            }
+            catch (ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
                
             }
 
-            ProductDTO ToSend = productMapRev.Map<ProductViewModel,ProductDTO>(view);
+            return Redirect("/Account/Products");
+
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct(ProductViewModel model)
+        {
+            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            ViewBag.categories = ct;
+            ViewBag.CurrId = model.Id;
+            ViewBag.Edit = true;
+
             try
             {
-                CSvc.AddProduct(ToSend);
+                model.ImgUrl = LoadLogic.UploadLogic(model.File, Server);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(ex.Message, ex.Message);
+            }
+
+            ProductDTO ToSend = productMapRev.Map<ProductViewModel, ProductDTO>(model);
+            try
+            {
+                CSvc.UpdateOneProduct(ToSend);
                 return Redirect("/Account/Products");
             }
-            catch(ValidationException ex)
+            catch (ValidationException ex)
             {
-                ModelState.AddModelError(ex.Property, ex.Message);
+                ModelState.AddModelError(ex.Message, ex.Message);
             }
-            return View(view);
-            
+
+            return View("CreateProduct",model);
+
         }
 
     }
