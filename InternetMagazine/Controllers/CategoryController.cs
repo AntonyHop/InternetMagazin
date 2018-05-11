@@ -10,26 +10,20 @@ using AutoMapper;
 
 namespace InternetMagazine.Controllers
 {
-    public class AccountController : Controller
+    public class CategoryController : Controller
     {
         ICategoryService CSvc;
-        IUserService USvc;
-
-        IMapper ViewToDto;
-        IMapper DtoToView;
+      
         IMapper productMap;
         IMapper categoryMap;
         IMapper productMapRev;
 
         IEnumerable<CategoryDTO> categories;
 
-        public AccountController(ICategoryService _csvc, IUserService _usvc)
+        public CategoryController(ICategoryService _csvc, IUserService _usvc)
         {
             CSvc = _csvc;
-            USvc = _usvc;
-
-            ViewToDto = new MapperConfiguration(cfg => cfg.CreateMap<RegistViewModel, UserDTO>()).CreateMapper();
-            DtoToView = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, RegistViewModel>()).CreateMapper();
+           
             productMap = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
             productMapRev = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, ProductDTO > ()).CreateMapper();
             categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
@@ -38,19 +32,6 @@ namespace InternetMagazine.Controllers
         }
 
         public ActionResult Index()
-        {
-            ViewBag.CurrentPage = "Account";
-
-            if (!User.Identity.IsAuthenticated)
-                return Redirect("/");
-
-            UserDTO curr = USvc.getUserByName(User.Identity.Name);
-
-            return View(DtoToView.Map<UserDTO, RegistViewModel>(curr));
-        }
-
-        [HttpGet]
-        public ActionResult Categories()
         {
             var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             return View(ct);
