@@ -68,6 +68,22 @@ namespace InternetMagazine.PL.Services
             }
         }
 
+        public UserDTO getUserById(int? id)
+        {
+            if(id == null)
+                throw new UserNotFoundExaption("Пользователь не найден", "UserService");
+
+            User curr = Db.Users.Get(u => u.Id == id).LastOrDefault();
+            if (curr == null)
+            {
+                throw new UserNotFoundExaption("Пользователь не найден", "UserService");
+            }
+            else
+            {
+                return DtoToUser.Map<User, UserDTO>(curr);
+            }
+        }
+
         public bool LoginVerify(string username, string passwort)
         {
             User curr = Db.Users.Get(u => u.NickName == username).FirstOrDefault();
@@ -87,6 +103,7 @@ namespace InternetMagazine.PL.Services
 
         public void RegistUser(UserDTO user)
         {
+            user.Password = Crypt.GetMd5Hash(user.Password);
             User curr = Db.Users.Get(u => u.NickName == user.NickName).LastOrDefault();
             if(curr != null)
             {
@@ -100,9 +117,31 @@ namespace InternetMagazine.PL.Services
 
         }
 
-        public void RemoveUser(UserDTO user)
+        public void UpdateUser(UserDTO user)
         {
-            User curr = Db.Users.Get(u => u.Id == user.Id).LastOrDefault();
+
+            User curr = Db.Users.Get(u => u.NickName == user.NickName).LastOrDefault();
+         
+            if(user.Role == null || user.Role == "")
+            {
+                user.Role = curr.Role;
+            }
+          
+            if (user.Password == null || user.Password == "")
+            {
+                user.Password = curr.Password;
+            }
+            else
+            {
+                user.Password = Crypt.GetMd5Hash(user.Password);
+            }
+            curr = DtoToUser.Map<UserDTO, User>(user);
+            Db.Users.Update(curr);
+        }
+
+        public void RemoveUser(int? id)
+        {
+            User curr = Db.Users.Get(u => u.Id == id).LastOrDefault();
             if (curr == null)
             {
                 throw new UserNotFoundExaption("Пользователь не найден", "UserService");

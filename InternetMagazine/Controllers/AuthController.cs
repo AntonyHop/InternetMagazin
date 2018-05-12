@@ -26,14 +26,14 @@ namespace InternetMagazine.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
-                return Redirect("/Account");
+                return Redirect("/User");
             return View();
         }
 
         public ActionResult Regist()
         {
             if (User.Identity.IsAuthenticated)
-                return Redirect("/Account");
+                return Redirect("/User");
             return View();
         }
 
@@ -48,6 +48,7 @@ namespace InternetMagazine.Controllers
                 {
                     USvc.RegistUser(newUser);
                     FormsAuthentication.SetAuthCookie(model.NickName, true);
+                    Session["User"] = model;
                     return Redirect("/");
                 }
                 catch (UserNotFoundExaption ex)
@@ -77,7 +78,8 @@ namespace InternetMagazine.Controllers
                 if (state)
                 {
                     FormsAuthentication.SetAuthCookie(model.NickName, true);
-                    return Redirect("/Account");
+                    Session["User"] = model;
+                    return Redirect("/User");
                 }
                 else
                 {

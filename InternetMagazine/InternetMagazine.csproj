@@ -263,16 +263,17 @@
     <Content Include="Views\Home\ProductItem.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Auth\Regist.cshtml" />
-    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Category\Categories.cshtml" />
+    <Content Include="Views\Category\index.cshtml" />
     <Content Include="Views\Category\Products.cshtml" />
     <Content Include="Views\Category\CreateProduct.cshtml" />
+    <Content Include="Views\User\Users.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\tmp\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

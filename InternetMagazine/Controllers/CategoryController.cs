@@ -20,7 +20,7 @@ namespace InternetMagazine.Controllers
 
         IEnumerable<CategoryDTO> categories;
 
-        public CategoryController(ICategoryService _csvc, IUserService _usvc)
+        public CategoryController(ICategoryService _csvc)
         {
             CSvc = _csvc;
            
@@ -103,7 +103,7 @@ namespace InternetMagazine.Controllers
             try
             {
                 CSvc.AddProduct(ToSend);
-                return Redirect("/Account/Products");
+                return Redirect("/Category/Products");
             }
             catch (ValidationException ex)
             {
@@ -150,7 +150,7 @@ namespace InternetMagazine.Controllers
                
             }
 
-            return Redirect("/Account/Products");
+            return Redirect("/Category/Products");
 
         }
 
@@ -175,7 +175,7 @@ namespace InternetMagazine.Controllers
             try
             {
                 CSvc.UpdateOneProduct(ToSend);
-                return Redirect("/Account/Products");
+                return Redirect("/Category/Products");
             }
             catch (ValidationException ex)
             {

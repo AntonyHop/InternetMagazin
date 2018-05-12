@@ -27,7 +27,7 @@ $(function () {
         }
     })
 
-    $(".add").click(function () {
+    $(".add").click(function () { 
         swal("Введите название катрегории", {
             content: "input",
         }).then((res) => {
@@ -39,7 +39,7 @@ $(function () {
             }
             if (res != "") {
                 $.ajax({
-                    url: '/Account/Categories',
+                    url: '/Category/Categories',
                     type: 'POST',
                     data: CaegoryModel,
                     success: function (result) {
@@ -76,7 +76,7 @@ $(function () {
             }
             if (res != '') {
                 $.ajax({
-                    url: '/Account/Categories',
+                    url: '/Category/Categories',
                     type: 'POST',
                     data: CaegoryModel,
                     success: function (result) {
@@ -104,7 +104,7 @@ $(function () {
                 }
                 if (willDelete) {
                     $.ajax({
-                        url: '/Account/Categories',
+                        url: '/Category/Categories',
                         type: 'POST',
                         data: CaegoryModel,
                         success: function (result) {
@@ -131,12 +131,34 @@ $(function () {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                $.get("/Account/RemoveProduct/" + $(this).data("id"), function (data) {
+                $.get("/Category/RemoveProduct/" + $(this).data("id"), function (data) {
                     if (data == "done") {
                         swal("Отлично", "Товар удален", "success");
                         $(elem).parent().parent().hide();
                     } else {
                         swal("Товар не удален", data, "error");
+                    }
+                })
+            }
+
+        });
+    });
+
+    $("table .deleteUser").click(function () {
+        elem = $(this);
+        swal({
+            title: "Удалить текущего пользователя?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.get("/User/Delete/" + $(this).data("id"), function (data) {
+                    if (data == "done") {
+                        swal("Отлично", "Пользователь удален", "success");
+                        $(elem).parent().parent().hide();
+                    } else {
+                        swal("Пользователь не удален", data, "error");
                     }
                 })
             }

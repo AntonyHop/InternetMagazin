@@ -5,6 +5,9 @@ namespace InternetMagazine.Models
 {
     public class RegistViewModel
     {
+        
+        public int Id { get; set; }
+
         [DataType(DataType.Text)]
         public string FirstName { get; set; }
 
