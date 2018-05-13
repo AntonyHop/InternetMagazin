@@ -1,0 +1,54 @@
+﻿@model IEnumerable<InternetMagazine.PL.DTO.OrderItemDTO>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6 container mt-3">
+    <h2>Корзина</h2>
+
+    <table class="table">
+       
+        <tr>
+            <th>
+               Название товара
+            </th>
+            <th>
+                Стоимость
+            </th>
+            <th style="text-align:center">
+               Количество
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+                <td style="text-align:center">
+                    <span>
+                        <a href="/Chart/Plus/@item.Product.Id">+</a>
+                        @Html.DisplayFor(modelItem => item.Count)
+                        <a href="/Chart/Minus/@item.Product.Id">-</a>
+                    </span>
+                </td>
+                <th>
+                    <a href="/Chart/Remove/@item.Product.Id">Удалить</a>
+                </th>
+            </tr>
+        }
+    </table>
+    <div class="d-flex flex-row justify-content-end">
+        <span><strong>Итого:</strong>@ViewBag.Price</span>
+    </div>
+</div>
+

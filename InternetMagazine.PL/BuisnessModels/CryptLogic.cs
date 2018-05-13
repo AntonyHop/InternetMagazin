@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-[assembly: InternalsVisibleTo("InternetMagazine.Tests")]
 namespace InternetMagazine.PL.BuisnessModels
 {
     

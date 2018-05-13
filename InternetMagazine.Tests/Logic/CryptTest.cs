@@ -5,9 +5,11 @@ using System.Security.Cryptography;
 
 namespace InternetMagazine.Tests.Logic
 {
-    [TestClass]
+    [TestClass()]
     public class CryptTest
     {
+
+/*
         [DataTestMethod]
         [DataRow("AdminRoot")]
         [DataRow("2285")]
@@ -24,5 +26,5 @@ namespace InternetMagazine.Tests.Logic
             Assert.IsTrue(s, hash +" "+ source+" "+ s.ToString());
 
         }
-    }
+    }*/
 }

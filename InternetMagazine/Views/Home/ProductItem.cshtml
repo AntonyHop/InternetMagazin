@@ -7,6 +7,14 @@
 <div class="container body-content">
     <h2>@Model.Name</h2>
     <p>@Model.Desc</p>
+
+    @using (Html.BeginForm("AddToCart", "Chart"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(Model => Model.Id)
+            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+        </div>
+    }
 </div>
 
 

@@ -55,7 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuisnessModels\CryptLogic.cs" />
-    <Compile Include="BuisnessModels\Order.cs" />
+    <Compile Include="DTO\OderItemDTO.cs" />
+    <Compile Include="Interfaces\IOrderService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />

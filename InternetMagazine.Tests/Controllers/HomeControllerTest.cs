@@ -1,14 +1,14 @@
 ﻿using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using InternetMagazine.Controllers;
 using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.DTO;
 using Moq;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InternetMagazine.Tests.Controllers
 {
-    [TestClass]
+    [TestClass()]
     public class HomeControllerTest
     {
         [TestMethod]
