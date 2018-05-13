@@ -74,7 +74,7 @@ namespace InternetMagazine.Controllers
 
         public ActionResult CreateProduct()
         {
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.Edit = false;
             return View();
@@ -83,7 +83,7 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult CreateProduct(ProductViewModel view)
         {
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.CurrId = 1;
             ViewBag.Edit = false;
@@ -154,7 +154,7 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel model)
         {
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.CurrId = model.Id;
             ViewBag.Edit = true;

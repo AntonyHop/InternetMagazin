@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternetMagazine.Util;
+namespace InternetMagazine.Util
 {
     public class ViewAutoMapperConfiguration
     {
