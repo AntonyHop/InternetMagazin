@@ -18,5 +18,6 @@ namespace InternetMagazine.DAL.Entities
         public IEnumerable<OrderLine> Products { get; set; }
 
         public double Price { get; set; }
+        public string Status { get; set; }
     }
 }

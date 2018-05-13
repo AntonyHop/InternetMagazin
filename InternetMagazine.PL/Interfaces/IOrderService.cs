@@ -10,17 +10,8 @@ namespace InternetMagazine.PL.Interfaces
 {
     public interface IOrderService
     {
-        UserDTO User { get; set; }
-        void AddItem(ProductDTO product, int count);
-        IEnumerable<OrderItemDTO> Lines { get; }
-        void RemoveLine(ProductDTO game);
-        void RemoveLine(int gameId);
-        decimal ComputeTotalValue();
-        void PlusItem(int id);
-        void MinusItem(int id);
-
-        void MakeOrder();
-
-        void Clear();
+        void AddOrder(IEnumerable<OrderItemDTO> orders, double total_price);
+        void Delete(int id);
+        void SetStatus(int id, string status);
     }
 }
