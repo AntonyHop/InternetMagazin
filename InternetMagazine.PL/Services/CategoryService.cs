@@ -13,23 +13,20 @@ namespace InternetMagazine.PL.Services
     public class CategoryService : ICategoryService
     {
         IUnitOfWork Db { get; set; }
-        IMapper categoryMap;
-        IMapper productMap;
-        IMapper productMapRev;
+        MapperConfiguration config = new AutoMapperConfiguration().Configure();
+        IMapper map;
 
         public CategoryService(IUnitOfWork uow)
         {
             Db = uow;
+            map = config.CreateMapper();
 
-            categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<Category, CategoryDTO>()).CreateMapper();
-            productMap = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
-            productMapRev = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
         }
 
         public IEnumerable<CategoryDTO> Categories()
         {
             
-            return categoryMap.Map<IEnumerable<Category>, List<CategoryDTO>>(Db.Categories.Get());
+            return map.Map<IEnumerable<Category>, List<CategoryDTO>>(Db.Categories.Get());
         }
 
         public IEnumerable<ProductDTO> LoadProductsCategory(int? catId)
@@ -39,13 +36,13 @@ namespace InternetMagazine.PL.Services
 
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Id);
         
-            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products); 
+            return map.Map<IEnumerable<Product>, List<ProductDTO>>(products); 
         }
 
         public IEnumerable<ProductDTO> Products()
         {
             IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Id);
-            return productMap.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+            return map.Map<IEnumerable<Product>, List<ProductDTO>>(products);
         }
 
         public ProductDTO GetOneProduct(int? id)
@@ -57,7 +54,7 @@ namespace InternetMagazine.PL.Services
                 if (geted == null)
                     throw new ValidationException("Товара не существует", "CategoryService");
 
-                return productMap.Map<Product, ProductDTO>(geted);
+                return map.Map<Product, ProductDTO>(geted);
             }
             else
             {
@@ -78,7 +75,7 @@ namespace InternetMagazine.PL.Services
           
             if (geted != null)
             {
-                Db.Products.Update(productMapRev.Map<ProductDTO, Product>(p));
+                Db.Products.Update(map.Map<ProductDTO, Product>(p));
             }
             else
             {
@@ -124,7 +121,7 @@ namespace InternetMagazine.PL.Services
             if (pr.Desc.Length > 255)
                 throw new ValidationException("Слижком большое описание товара", "Category service");
 
-            var Product = productMapRev.Map<ProductDTO,Product>(pr);
+            var Product = map.Map<ProductDTO,Product>(pr);
             Db.Products.Create(Product);
         }
       
@@ -149,7 +146,6 @@ namespace InternetMagazine.PL.Services
 
         public void DeleteProduct(int? id)
         {
-
             Product geted = Db.Products.Get(c => c.Id == id).FirstOrDefault();
 
             if (geted == null)

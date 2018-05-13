@@ -13,27 +13,24 @@ namespace InternetMagazine.Controllers
     public class CategoryController : Controller
     {
         ICategoryService CSvc;
-      
-        IMapper productMap;
-        IMapper categoryMap;
-        IMapper productMapRev;
+
+        MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
+        IMapper map;
 
         IEnumerable<CategoryDTO> categories;
 
         public CategoryController(ICategoryService _csvc)
         {
             CSvc = _csvc;
-           
-            productMap = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            productMapRev = new MapperConfiguration(cfg => cfg.CreateMap<ProductViewModel, ProductDTO > ()).CreateMapper();
-            categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
+
+            map = config.CreateMapper();
 
             categories = CSvc.Categories();
         }
 
         public ActionResult Index()
         {
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             return View(ct);
         }
 
@@ -70,7 +67,7 @@ namespace InternetMagazine.Controllers
         public ActionResult Products()
         {
             IEnumerable<ProductDTO> prod = CSvc.Products();
-            IEnumerable<ProductViewModel>  productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
+            IEnumerable<ProductViewModel>  productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
 
             return View(productsvm);
         }
@@ -99,7 +96,7 @@ namespace InternetMagazine.Controllers
             {
                 ModelState.AddModelError(ex.Message, ex.Message);
             }
-            ProductDTO ToSend = productMapRev.Map<ProductViewModel, ProductDTO>(view);
+            ProductDTO ToSend = map.Map<ProductViewModel, ProductDTO>(view);
             try
             {
                 CSvc.AddProduct(ToSend);
@@ -132,14 +129,14 @@ namespace InternetMagazine.Controllers
 
         public ActionResult EditProduct(int? id)
         {
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.Edit = true;
 
             try
             {
                 ProductDTO product = CSvc.GetOneProduct(id);
-                ProductViewModel vProduct = productMap.Map<ProductDTO, ProductViewModel>(product);
+                ProductViewModel vProduct = map.Map<ProductDTO, ProductViewModel>(product);
                 ViewBag.CurrId = product.CategoryId;
 
                 return View("CreateProduct", vProduct);
@@ -171,7 +168,7 @@ namespace InternetMagazine.Controllers
                 ModelState.AddModelError(ex.Message, ex.Message);
             }
 
-            ProductDTO ToSend = productMapRev.Map<ProductViewModel, ProductDTO>(model);
+            ProductDTO ToSend = map.Map<ProductViewModel, ProductDTO>(model);
             try
             {
                 CSvc.UpdateOneProduct(ToSend);

@@ -18,6 +18,9 @@ namespace InternetMagazine.PL.Interfaces
         decimal ComputeTotalValue();
         void PlusItem(int id);
         void MinusItem(int id);
+
+        void MakeOrder();
+
         void Clear();
     }
 }

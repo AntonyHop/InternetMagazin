@@ -9,6 +9,8 @@ namespace InternetMagazine.DAL.EF
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderLine> OrderLines { get; set; }
 
         public EFContext(string connection) : base(connection)
         {   

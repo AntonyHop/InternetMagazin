@@ -17,7 +17,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO p1 = new ProductDTO() { Id = 1, Name = "Test1", Author = "Test", Price = 250, Desc = "test" };
             ProductDTO p2 = new ProductDTO() { Id = 2, Name = "Test2", Author = "Test", Price = 250, Desc = "test" };
             ProductDTO p3 = new ProductDTO() { Id = 3, Name = "Test3", Author = "Test", Price = 250, Desc = "test" };
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             cart.AddItem(p1, 1);
             cart.AddItem(p2, 1);
@@ -39,7 +39,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO game2 = new ProductDTO { Id = 2, Name = "Test2" };
 
             // Организация - создание корзины
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             // Действие
             cart.AddItem(game1, 1);
@@ -62,7 +62,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO game3 = new ProductDTO { Id = 3, Name = "Игра3" };
 
             // Организация - создание корзины
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             // Организация - добавление нескольких игр в корзину
             cart.AddItem(game1, 1);
@@ -87,7 +87,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO game3 = new ProductDTO { Id = 3, Name = "Игра3" };
 
             // Организация - создание корзины
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             // Организация - добавление нескольких игр в корзину
             cart.AddItem(game1, 1);
@@ -112,7 +112,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2", Price = 55 };
 
             // Организация - создание корзины
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             // Действие
             cart.AddItem(game1, 1);
@@ -132,7 +132,7 @@ namespace InternetMagazine.Tests.Logic
             ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2", Price = 55 };
 
             // Организация - создание корзины
-            IOrderService cart = new OrderService();
+            OrderLogic cart = new OrderLogic();
 
             // Действие
             cart.AddItem(game1, 1);

@@ -14,8 +14,8 @@ namespace InternetMagazine.PL.Services
     public class UserService : IUserService
     {
         IUnitOfWork Db { get; set; }
-        IMapper DtoToUser;
-        IMapper UserToDto;
+        MapperConfiguration config = new AutoMapperConfiguration().Configure();
+        IMapper map;
 
         CryptLogic Crypt = new CryptLogic();
 
@@ -23,8 +23,7 @@ namespace InternetMagazine.PL.Services
         {
             Db = _db;
 
-            DtoToUser = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO,User>()).CreateMapper();
-            UserToDto = new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO > ()).CreateMapper();
+            map = config.CreateMapper();
 
         }
 
@@ -51,7 +50,7 @@ namespace InternetMagazine.PL.Services
             }
             else
             {
-                return DtoToUser.Map<IEnumerable<User>, List<UserDTO>>(users);
+                return map.Map<IEnumerable<User>, List<UserDTO>>(users);
             }    
         }
 
@@ -64,7 +63,7 @@ namespace InternetMagazine.PL.Services
             }
             else
             {
-                return DtoToUser.Map<User, UserDTO>(curr);
+                return map.Map<User, UserDTO>(curr);
             }
         }
 
@@ -80,7 +79,7 @@ namespace InternetMagazine.PL.Services
             }
             else
             {
-                return DtoToUser.Map<User, UserDTO>(curr);
+                return map.Map<User, UserDTO>(curr);
             }
         }
 
@@ -111,7 +110,7 @@ namespace InternetMagazine.PL.Services
             }
             else
             {
-                curr = DtoToUser.Map<UserDTO, User>(user);
+                curr = map.Map<UserDTO, User>(user);
                 Db.Users.Create(curr);
             }
 
@@ -135,7 +134,7 @@ namespace InternetMagazine.PL.Services
             {
                 user.Password = Crypt.GetMd5Hash(user.Password);
             }
-            curr = DtoToUser.Map<UserDTO, User>(user);
+            curr = map.Map<UserDTO, User>(user);
             Db.Users.Update(curr);
         }
 

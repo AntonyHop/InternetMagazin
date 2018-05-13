@@ -5,20 +5,19 @@ using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.Infrastructure;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using InternetMagazine.Util;
 
 namespace InternetMagazine.Controllers
 {
     public class UserController : Controller
     {
         IUserService USvc;
-        IMapper ViewToDto;
-        IMapper DtoToView;
+        MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
+        IMapper map;
 
         public UserController(IUserService _USvc)
         {
-            ViewToDto = new MapperConfiguration(cfg => cfg.CreateMap<RegistViewModel, PL.DTO.UserDTO>()).CreateMapper();
-            DtoToView = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, RegistViewModel>()).CreateMapper();
-
+            map = config.CreateMapper();
             USvc = _USvc;
         }
 
@@ -31,7 +30,7 @@ namespace InternetMagazine.Controllers
 
             UserDTO curr = USvc.getUserByName(User.Identity.Name);
 
-            return View(DtoToView.Map<UserDTO, RegistViewModel>(curr));
+            return View(map.Map<UserDTO, RegistViewModel>(curr));
         }
 
         public ActionResult Users()
@@ -39,7 +38,7 @@ namespace InternetMagazine.Controllers
             try
             {
                 IEnumerable<UserDTO> users = USvc.GetUsers();
-                List<RegistViewModel> UserToView = DtoToView.Map<IEnumerable<UserDTO>, List<RegistViewModel>>(users);
+                List<RegistViewModel> UserToView = map.Map<IEnumerable<UserDTO>, List<RegistViewModel>>(users);
                 return View(UserToView);
             }
             catch (ValidationException ex)
@@ -54,7 +53,7 @@ namespace InternetMagazine.Controllers
             try
             {
                 UserDTO ud = USvc.getUserById(id);
-                RegistViewModel UserToView = DtoToView.Map<UserDTO, RegistViewModel>(ud);
+                RegistViewModel UserToView = map.Map<UserDTO, RegistViewModel>(ud);
 
                 return View(UserToView);
             }
@@ -69,7 +68,7 @@ namespace InternetMagazine.Controllers
         {
             try
             {
-                USvc.UpdateUser(ViewToDto.Map<RegistViewModel, UserDTO>(model));
+                USvc.UpdateUser(map.Map<RegistViewModel, UserDTO>(model));
                 return  Redirect("/User/Users");
             }
             catch (UserNotFoundExaption ex)
@@ -87,7 +86,7 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult Add(RegistViewModel model)
         {
-            UserDTO newUser = ViewToDto.Map<RegistViewModel, UserDTO>(model);
+            UserDTO newUser = map.Map<RegistViewModel, UserDTO>(model);
             try
             {
                 USvc.RegistUser(newUser);

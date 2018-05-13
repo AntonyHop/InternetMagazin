@@ -3,6 +3,7 @@ using InternetMagazine.Models;
 using InternetMagazine.PL.DTO;
 using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.Services;
+using InternetMagazine.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,15 @@ namespace InternetMagazine.Controllers
     public class ChartController : Controller
     {
 
-
         ICategoryService cats;
+        MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
         IMapper map;
 
         public ChartController(ICategoryService _cats)
         {
             cats = _cats;
-            map = new MapperConfiguration(cfg => cfg.CreateMap<OrderItemDTO,OrderItemVIewModel>()).CreateMapper();
-          
+            map = config.CreateMapper();
+
         }
 
         public ActionResult Index()
@@ -63,12 +64,12 @@ namespace InternetMagazine.Controllers
             return Redirect("/Chart");
         }
 
-        public OrderService GetOrder()
+        public OrderLogic GetOrder()
         {
-            OrderService cart = (OrderService)Session["Cart"];
+            OrderLogic cart = (OrderLogic)Session["Cart"];
             if (cart == null)
             {
-                cart = new OrderService();
+                cart = new OrderLogic();
                 Session["Cart"] = cart;
             }
             return cart;

@@ -7,29 +7,29 @@ using InternetMagazine.PL.DTO;
 using InternetMagazine.Models;
 using InternetMagazine.PL.Infrastructure;
 using AutoMapper;
+using InternetMagazine.Util;
 
 namespace InternetMagazine.Controllers
 {
     public class HomeController : Controller
     {
         ICategoryService svc;
-        IMapper productMap;
-        IMapper categoryMap;
+        MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
+        IMapper map;
 
 
         public HomeController(ICategoryService _svc)
         {
             svc = _svc;
 
-            productMap = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            categoryMap = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
+            map = config.CreateMapper();
 
 
             List<CategoryDTO> categories = (List <CategoryDTO>)svc.Categories();
 
             categories.Insert(0, new CategoryDTO() { Id = 0, Name = "Все категории" });
 
-            var ct = categoryMap.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
+            var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.books = ct;
 
         } 
@@ -42,11 +42,11 @@ namespace InternetMagazine.Controllers
             if (id != null && id > 0)
             {
                IEnumerable<ProductDTO> prod = svc.LoadProductsCategory(id);
-               productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
+               productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = id;
             }else{
                 IEnumerable<ProductDTO> prod = svc.Products();
-                productsvm = productMap.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
+                productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = 0;
             }
 
@@ -83,7 +83,7 @@ namespace InternetMagazine.Controllers
             try{
                 toShowItem = svc.GetOneProduct(id.GetValueOrDefault());
 
-                return View(productMap.Map<ProductDTO, ProductViewModel>(toShowItem));
+                return View(map.Map<ProductDTO, ProductViewModel>(toShowItem));
             }
             catch(ValidationException ex){
                 return Redirect("/Home/Error");

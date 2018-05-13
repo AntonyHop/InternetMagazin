@@ -12,6 +12,8 @@ namespace InternetMagazine.DAL.UnitOfWork
         private GenericRepository<Category> _categories;
         private GenericRepository<Product> _products;
         private GenericRepository<User> _users;
+        private GenericRepository<Order> _orders;
+        private GenericRepository<OrderLine> _orderLines;
 
         public UnitOfWork(string Connection)
         {
@@ -20,7 +22,7 @@ namespace InternetMagazine.DAL.UnitOfWork
 
         public GenericRepository<Category> Categories {
             get {
-                if(_categories == null)
+                if (_categories == null)
                     _categories = new GenericRepository<Category>(ctx);
                 return _categories;
             }
@@ -43,6 +45,26 @@ namespace InternetMagazine.DAL.UnitOfWork
                 if (_users == null)
                     _users = new GenericRepository<User>(ctx);
                 return _users;
+            }
+        }
+
+        public GenericRepository<Order> Orders
+        {
+            get
+            {
+                if (_orders == null)
+                    _orders = new GenericRepository<Order>(ctx);
+                return _orders;
+            }
+        }
+
+        public GenericRepository<OrderLine> OrderLines
+        {
+            get
+            {
+                if (_orderLines == null)
+                    _orderLines = new GenericRepository<OrderLine>(ctx);
+                return _orderLines;
             }
         }
 

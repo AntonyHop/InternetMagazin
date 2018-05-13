@@ -56,8 +56,10 @@
   <ItemGroup>
     <Compile Include="BuisnessModels\CryptLogic.cs" />
     <Compile Include="DTO\OderItemDTO.cs" />
+    <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\MappingProfile.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
-    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="BuisnessModels\OrderLogic.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />

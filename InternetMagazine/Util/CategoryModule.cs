@@ -11,7 +11,7 @@ namespace InternetMagazine.Util
         {
             Bind<ICategoryService>().To<CategoryService>();
             Bind<IUserService>().To<UserService>();
-            Bind<IOrderService>().To<OrderService>();
+           
         }
     }
 } 

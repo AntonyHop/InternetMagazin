@@ -7,20 +7,20 @@ using InternetMagazine.Models;
 using InternetMagazine.PL.Infrastructure;
 using System.Web.Security;
 using AutoMapper;
+using InternetMagazine.Util;
 
 namespace InternetMagazine.Controllers
 {
     public class AuthController : Controller
     {
         IUserService USvc;
-        IMapper ViewToDto;
-        IMapper DtoToView;
+        MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
+        IMapper map;
         public AuthController(IUserService _svc)
         {
             USvc = _svc;
 
-            ViewToDto = new MapperConfiguration(cfg => cfg.CreateMap<RegistViewModel, UserDTO>()).CreateMapper();
-            DtoToView = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, RegistViewModel > ()).CreateMapper();
+            map = config.CreateMapper();
         }
         // GET: Auth
         public ActionResult Index()
@@ -43,7 +43,7 @@ namespace InternetMagazine.Controllers
             
             if(model.Password == model.ConfirmPassword)
             {
-                UserDTO newUser = ViewToDto.Map<RegistViewModel, UserDTO>(model);
+                UserDTO newUser = map.Map<RegistViewModel, UserDTO>(model);
                 try
                 {
                     USvc.RegistUser(newUser);

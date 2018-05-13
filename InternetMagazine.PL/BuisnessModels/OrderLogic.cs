@@ -1,4 +1,6 @@
-﻿using InternetMagazine.PL.DTO;
+﻿using AutoMapper;
+using InternetMagazine.DAL.Entities;
+using InternetMagazine.PL.DTO;
 using InternetMagazine.PL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,15 +10,17 @@ using System.Threading.Tasks;
 
 namespace InternetMagazine.PL.Services
 {
-    public class OrderService : IOrderService
+    public class OrderLogic
     {
         public UserDTO User { get; set; }
         public IEnumerable<OrderItemDTO> Lines
         {
+            
             get { return chart; }
         }
 
         private List<OrderItemDTO> chart = new List<OrderItemDTO>();
+
 
         public void AddItem(ProductDTO product, int count)
         {
@@ -59,6 +63,12 @@ namespace InternetMagazine.PL.Services
                     RemoveLine(id);
                 }
             }
+        }
+
+        public void MakeOrder()
+        {
+            Order ord = new Order();
+           
         }
 
 
