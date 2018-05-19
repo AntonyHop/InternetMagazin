@@ -28,8 +28,10 @@ $(function () {
     })
 
     $(".add").click(function () { 
-        swal("Введите название катрегории", {
+        swal("Введите название Комнаты", {
             content: "input",
+            closeOnClickOutside: false,
+            closeOnEsc: false,
         }).then((res) => {
 
             var CaegoryModel = {
@@ -43,14 +45,14 @@ $(function () {
                     type: 'POST',
                     data: CaegoryModel,
                     success: function (result) {
-                        swal("Прекрасно", "Категория добавлена", "success");
+                        swal("Прекрасно", "Комната добавлена", "success");
                         setTimeout(function () {
                             location.reload();
                         },500) 
                     }
                 });
             } else {
-                swal("О нет! ", "Категория не добавлена", "error");
+                swal("О нет! ", "Комната не добавлена", "error");
             }
         });
     });
@@ -58,7 +60,7 @@ $(function () {
     $(".edit").click(function () {
      
         var add = $(this).parent().siblings(".name");
-        swal("Введите название катрегории", {
+        swal("Введите название Комнтаты", {
             closeOnClickOutside: false,
             closeOnEsc: false,
             content: {
@@ -81,7 +83,7 @@ $(function () {
                     data: CaegoryModel,
                     success: function (result) {
                         add.text(res);
-                        swal("Прекрасно", "Категория изменена", "success");
+                        swal("Прекрасно", "Комната изменена", "success");
                     }
                 });
             }
@@ -90,8 +92,7 @@ $(function () {
     $(".delete").click(function () {
         var dell = $(this).parent().parent();
         swal({
-            title: "Удалить текущую категорию?",
-            text: "Если вы удалите категорию то все товары останутся без категории",
+            title: "Удалить текущую Комнату?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -110,9 +111,9 @@ $(function () {
                         success: function (result) {
                             if (result != "no") {
                                 $(dell).hide();
-                                swal("Прекрасно", "Категория удалена", "success");
+                                swal("Прекрасно", "Комната удалена", "success");
                             } else {
-                                swal("Gлохо", "Категория не удалена", "error");
+                                swal("Gлохо", "Комнта не удалена", "error");
                             }
 
                         }
@@ -133,10 +134,10 @@ $(function () {
             if (willDelete) {
                 $.get("/Category/RemoveProduct/" + $(this).data("id"), function (data) {
                     if (data == "done") {
-                        swal("Отлично", "Товар удален", "success");
+                        swal("Отлично", "Событие удалено", "success");
                         $(elem).parent().parent().hide();
                     } else {
-                        swal("Товар не удален", data, "error");
+                        swal("Событие не удалено", data, "error");
                     }
                 })
             }

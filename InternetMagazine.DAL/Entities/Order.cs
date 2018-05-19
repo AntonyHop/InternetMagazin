@@ -9,15 +9,13 @@ namespace InternetMagazine.DAL.Entities
 {
     public class Order
     {
-        [Key]
         public int Id { get; set; }
-
-        public int? UserId { get; set; }
-        public User User { get; set; }
-
-        public IEnumerable<OrderLine> Products { get; set; }
-
-        public double Price { get; set; }
-        public string Status { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime Date { get; set; }
+        public int Count { get; set; }
     }
 }

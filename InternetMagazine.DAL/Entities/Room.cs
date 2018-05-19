@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InternetMagazine.DAL.Entities
 {
-    public class Category
+    public class Room
     {
         [Key]
         public int Id { get; set; }

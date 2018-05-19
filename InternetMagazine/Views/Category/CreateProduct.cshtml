@@ -1,4 +1,4 @@
-﻿@model InternetMagazine.Models.ProductViewModel
+﻿@model InternetMagazine.Models.EventViewModel
 
 @{
     ViewBag.Title = "CreateProduct";
@@ -8,13 +8,13 @@
 @if (!ViewBag.Edit)
 {
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1>Создать товар</h1>
+        <h1>Создать событие</h1>
     </div>
 }
 else
 {
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1>Изменить товар</h1>
+        <h1>Изменить событие</h1>
     </div>
 }
 
@@ -57,7 +57,7 @@ else
 
        
         <div class="form-group">
-            <span class="control-label col-md-2">Категория</span>
+            <span class="control-label col-md-2">Комната</span>
             <div class="col-md-10">
                <select name="CategoryId" class="form-control">
                    @foreach (var cat in ViewBag.categories)

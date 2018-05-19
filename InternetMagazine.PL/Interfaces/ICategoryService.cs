@@ -6,16 +6,20 @@ namespace InternetMagazine.PL.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<ProductDTO> LoadProductsCategory(int? catId);
-        IEnumerable<ProductDTO> Products();
-        IEnumerable<CategoryDTO> Categories();
-        ProductDTO GetOneProduct(int? id);
+        IEnumerable<EventDTO> LoadProductsCategory(int? catId);
+        IEnumerable<EventDTO> Products();
+        IEnumerable<EventDTO> Search(string q);
+        IEnumerable<RoomDTO> Categories();
+        EventDTO GetOneProduct(int? id);
         void EditCategory(int id, string name);
         void AddCategory(string name);
         void DeleteCategory(int id);
+        void CreateOrder(OrderItemDTO or);
+        IEnumerable<OrderItemDTO> GetOrders();
+        void DellOrder(int? id);
 
-        void AddProduct(ProductDTO pr);
-        void UpdateOneProduct(ProductDTO p);
+        void AddProduct(EventDTO pr);
+        void UpdateOneProduct(EventDTO p);
         void DeleteProduct(int? id);
 
         void Dispose();

@@ -9,31 +9,31 @@ namespace InternetMagazine.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private EFContext ctx;
-        private GenericRepository<Category> _categories;
-        private GenericRepository<Product> _products;
+        private GenericRepository<Room> _categories;
+        private GenericRepository<Event> _products;
         private GenericRepository<User> _users;
         private GenericRepository<Order> _orders;
-        private GenericRepository<OrderLine> _orderLines;
+      
 
         public UnitOfWork(string Connection)
         {
             ctx = new EFContext(Connection);
         }
 
-        public GenericRepository<Category> Categories {
+        public GenericRepository<Room> Categories {
             get {
                 if (_categories == null)
-                    _categories = new GenericRepository<Category>(ctx);
+                    _categories = new GenericRepository<Room>(ctx);
                 return _categories;
             }
         }
 
-        public GenericRepository<Product> Products
+        public GenericRepository<Event> Products
         {
             get
             {
                 if (_products == null)
-                    _products = new GenericRepository<Product>(ctx);
+                    _products = new GenericRepository<Event>(ctx);
                 return _products;
             }
         }
@@ -58,15 +58,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<OrderLine> OrderLines
-        {
-            get
-            {
-                if (_orderLines == null)
-                    _orderLines = new GenericRepository<OrderLine>(ctx);
-                return _orderLines;
-            }
-        }
+       
 
         private bool disposed = false;
 

@@ -12,14 +12,14 @@ namespace InternetMagazine.Tests.Dal
     public class IGenericRepositoryTest
     {
 
-        IGenericRepository<Product> rep;
+        IGenericRepository<Event> rep;
         EFContext ctx = new EFContext(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=InternetMagazine;Integrated Security=True");
-        Product tp = new Product() {Name = "Test1", Desc = "Test", CategoryId = 1, Price = 228.50M };
+        Event tp = new Event() {Name = "Test1", Desc = "Test", CategoryId = 1, Price = 228.50M };
 
         [TestInitialize]
         public void Setup()
         {
-            rep = new GenericRepository<Product>(ctx);
+            rep = new GenericRepository<Event>(ctx);
         }
 
         [TestMethod]
@@ -28,9 +28,9 @@ namespace InternetMagazine.Tests.Dal
             try
             {
                 rep.Create(tp);
-                tp = new Product() { Name = "Test2", Desc = "Test", CategoryId = 1, Price = 228.55M };
+                tp = new Event() { Name = "Test2", Desc = "Test", CategoryId = 1, Price = 228.55M };
                 rep.Create(tp);
-                tp = new Product() { Name = "Test3", Desc = "Test", CategoryId = 1, Price = 228M };
+                tp = new Event() { Name = "Test3", Desc = "Test", CategoryId = 1, Price = 228M };
                 rep.Create(tp);
 
             }

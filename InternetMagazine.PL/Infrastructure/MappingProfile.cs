@@ -13,10 +13,10 @@ namespace InternetMagazine.PL.Infrastructure
     {
         public MappingProfile()
         {
-            CreateMap<Category, CategoryDTO>().ReverseMap();
-            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Room, RoomDTO>().ReverseMap();
+            CreateMap<Event, EventDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<OrderLine, OrderItemDTO>().ReverseMap();
+           
         }
     }
 }

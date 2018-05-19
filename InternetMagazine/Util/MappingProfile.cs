@@ -8,10 +8,11 @@ namespace InternetMagazine.Util
     {
         public MappingProfile()
         {
-            CreateMap<CategoryDTO, CategoryViewModel>().ReverseMap();
-            CreateMap<ProductDTO, ProductViewModel>().ReverseMap();
+            CreateMap<RoomDTO, RoomViewModel>().ReverseMap();
+            CreateMap<EventDTO, EventViewModel>().ReverseMap();
             CreateMap<UserDTO, RegistViewModel>().ReverseMap();
             CreateMap<UserDTO, AuthViewModel>().ReverseMap();
+            CreateMap<OrderItemDTO, OrderItemVIewModel>().ReverseMap();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace InternetMagazine.Tests.Controllers
         {
             // Arrange
             var mock = new Mock<ICategoryService>();
-            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            mock.Setup(a => a.Categories()).Returns(new List<RoomDTO>());
             HomeController controller = new HomeController(mock.Object);
 
             int? id = 0;
@@ -33,7 +33,7 @@ namespace InternetMagazine.Tests.Controllers
         {
             // Arrange
             var mock = new Mock<ICategoryService>();
-            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            mock.Setup(a => a.Categories()).Returns(new List<RoomDTO>());
             HomeController controller = new HomeController(mock.Object);
 
             // Act
@@ -48,7 +48,7 @@ namespace InternetMagazine.Tests.Controllers
         {
             // Arrange
             var mock = new Mock<ICategoryService>();
-            mock.Setup(a => a.Categories()).Returns(new List<CategoryDTO>());
+            mock.Setup(a => a.Categories()).Returns(new List<RoomDTO>());
             HomeController controller = new HomeController(mock.Object);
 
             // Act

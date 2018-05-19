@@ -16,12 +16,15 @@ namespace InternetMagazine.Controllers
     {
 
         ICategoryService cats;
+        IOrderService ord;
         MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
         IMapper map;
 
-        public ChartController(ICategoryService _cats)
+        public ChartController(ICategoryService _cats,IOrderService _ord)
         {
             cats = _cats;
+            ord = _ord;
+
             map = config.CreateMapper();
 
         }
@@ -37,7 +40,7 @@ namespace InternetMagazine.Controllers
 
         public ActionResult AddToCart(int id)
         {
-            ProductDTO p = cats.GetOneProduct(id);
+            EventDTO p = cats.GetOneProduct(id);
 
             GetOrder().AddItem(p, 1);
             return Redirect("/Home");
@@ -57,6 +60,18 @@ namespace InternetMagazine.Controllers
             return Redirect("/Chart");
         }
 
+        public ActionResult MakeOrder()
+        {
+            UserDTO u = (UserDTO)Session["user"];
+            if(u != null)
+            {
+                List<OrderItemDTO> its = GetOrder().Lines.ToList();
+
+                ord.AddOrder(its,u);
+            }
+            return Content("OrderCreate");
+        }
+
         public ActionResult Minus(int id)
         {
 
@@ -64,16 +79,12 @@ namespace InternetMagazine.Controllers
             return Redirect("/Chart");
         }
 
-        public OrderLogic GetOrder()
+        public ActionResult Orders()
         {
-            OrderLogic cart = (OrderLogic)Session["Cart"];
-            if (cart == null)
-            {
-                cart = new OrderLogic();
-                Session["Cart"] = cart;
-            }
-            return cart;
+            return View();
         }
+
+       
 
     }
 }

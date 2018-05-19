@@ -12,7 +12,7 @@ namespace InternetMagazine.Tests.Dal
         public void EFContextInitTest()//Проверка Подключения к єнтити фреймворку
         {
             using (EFContext EFContext = new EFContext(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=InternetMagazine;Integrated Security=True")) {
-                Category fc = EFContext.Categories.Find(1);
+                Room fc = EFContext.Categories.Find(1);
 
                 Assert.IsNotNull(fc);
             }

@@ -20,7 +20,7 @@ namespace InternetMagazine
 
 
             NinjectModule categoryModule = new CategoryModule();
-            NinjectModule serviceModule = new ServiceModule(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=InternetMagazine;Integrated Security=True");
+            NinjectModule serviceModule = new ServiceModule(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AntiCafe2;Integrated Security=True");
             var kernel = new StandardKernel(serviceModule, categoryModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

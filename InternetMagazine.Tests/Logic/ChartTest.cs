@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using InternetMagazine.PL.BuisnessModels;
 using InternetMagazine.PL.DTO;
 using InternetMagazine.PL.Services;
-using InternetMagazine.PL.Interfaces;
 
 namespace InternetMagazine.Tests.Logic
 {
@@ -14,9 +12,9 @@ namespace InternetMagazine.Tests.Logic
         [TestMethod]
         public void AddToChartTest()
         {
-            ProductDTO p1 = new ProductDTO() { Id = 1, Name = "Test1", Author = "Test", Price = 250, Desc = "test" };
-            ProductDTO p2 = new ProductDTO() { Id = 2, Name = "Test2", Author = "Test", Price = 250, Desc = "test" };
-            ProductDTO p3 = new ProductDTO() { Id = 3, Name = "Test3", Author = "Test", Price = 250, Desc = "test" };
+            EventDTO p1 = new EventDTO() { Id = 1, Name = "Test1", Author = "Test", Price = 250, Desc = "test" };
+            EventDTO p2 = new EventDTO() { Id = 2, Name = "Test2", Author = "Test", Price = 250, Desc = "test" };
+            EventDTO p3 = new EventDTO() { Id = 3, Name = "Test3", Author = "Test", Price = 250, Desc = "test" };
             OrderLogic cart = new OrderLogic();
 
             cart.AddItem(p1, 1);
@@ -35,8 +33,8 @@ namespace InternetMagazine.Tests.Logic
         public void CanAddCountForExistingLines()
         {
             // Организация - создание нескольких тестовых игр
-            ProductDTO game1 = new ProductDTO { Id = 1, Name = "Test1" };
-            ProductDTO game2 = new ProductDTO { Id = 2, Name = "Test2" };
+            EventDTO game1 = new EventDTO { Id = 1, Name = "Test1" };
+            EventDTO game2 = new EventDTO { Id = 2, Name = "Test2" };
 
             // Организация - создание корзины
             OrderLogic cart = new OrderLogic();
@@ -57,9 +55,9 @@ namespace InternetMagazine.Tests.Logic
         public void CanRemoveLine()
         {
             // Организация - создание нескольких тестовых игр
-            ProductDTO game1 = new ProductDTO { Id = 1, Name = "Игра1" };
-            ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2" };
-            ProductDTO game3 = new ProductDTO { Id = 3, Name = "Игра3" };
+            EventDTO game1 = new EventDTO { Id = 1, Name = "Игра1" };
+            EventDTO game2 = new EventDTO { Id = 2, Name = "Игра2" };
+            EventDTO game3 = new EventDTO { Id = 3, Name = "Игра3" };
 
             // Организация - создание корзины
             OrderLogic cart = new OrderLogic();
@@ -82,9 +80,9 @@ namespace InternetMagazine.Tests.Logic
         public void CanRemoveLineByID()
         {
             // Организация - создание нескольких тестовых игр
-            ProductDTO game1 = new ProductDTO { Id = 1, Name = "Игра1" };
-            ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2" };
-            ProductDTO game3 = new ProductDTO { Id = 3, Name = "Игра3" };
+            EventDTO game1 = new EventDTO { Id = 1, Name = "Игра1" };
+            EventDTO game2 = new EventDTO { Id = 2, Name = "Игра2" };
+            EventDTO game3 = new EventDTO { Id = 3, Name = "Игра3" };
 
             // Организация - создание корзины
             OrderLogic cart = new OrderLogic();
@@ -108,8 +106,8 @@ namespace InternetMagazine.Tests.Logic
         public void CalculateCartTotal()
         {
             // Организация - создание нескольких тестовых игр
-            ProductDTO game1 = new ProductDTO { Id = 1, Name = "Игра1", Price = 100 };
-            ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2", Price = 55 };
+            EventDTO game1 = new EventDTO { Id = 1, Name = "Игра1", Price = 100 };
+            EventDTO game2 = new EventDTO { Id = 2, Name = "Игра2", Price = 55 };
 
             // Организация - создание корзины
             OrderLogic cart = new OrderLogic();
@@ -128,8 +126,8 @@ namespace InternetMagazine.Tests.Logic
         public void CanClearContents()
         {
             // Организация - создание нескольких тестовых игр
-            ProductDTO game1 = new ProductDTO { Id = 1, Name = "Игра1", Price = 100 };
-            ProductDTO game2 = new ProductDTO { Id = 2, Name = "Игра2", Price = 55 };
+            EventDTO game1 = new EventDTO { Id = 1, Name = "Игра1", Price = 100 };
+            EventDTO game2 = new EventDTO { Id = 2, Name = "Игра2", Price = 55 };
 
             // Организация - создание корзины
             OrderLogic cart = new OrderLogic();

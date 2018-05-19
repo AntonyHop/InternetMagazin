@@ -3,7 +3,7 @@ using System.Web;
 
 namespace InternetMagazine.Models
 {
-    public class ProductViewModel
+    public class EventViewModel
     {
         public int Id { get; set; }
 
@@ -21,7 +21,7 @@ namespace InternetMagazine.Models
 
         public int? CategoryId { get; set; }
         
-        public CategoryViewModel Category { get; set; }
+        public RoomViewModel Category { get; set; }
 
         public string ImgUrl { get; set; }
 

@@ -8,7 +8,13 @@ namespace InternetMagazine.PL.DTO
 {
     public class OrderItemDTO
     {
-        public ProductDTO Product { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public int RoomId { get; set; }
+        public RoomDTO Room { get; set; }
+        
+        public DateTime Date { get; set; }
         public int Count { get; set; }
     }
 }
