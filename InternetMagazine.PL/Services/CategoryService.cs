@@ -124,8 +124,24 @@ namespace InternetMagazine.PL.Services
             var Product = map.Map<ProductDTO,Product>(pr);
             Db.Products.Create(Product);
         }
-      
-        
+
+
+        public IEnumerable<ProductDTO> Search(string s)
+        {
+            IEnumerable<Product> events = Db.Products.GetWithInclude(n => n.Category).Where(n => n.Name.Contains(s));
+
+            if (events.Count() == 0)
+            {
+                throw new ValidationException("Not Found", "category service");
+            }
+            else
+            {
+                return map.Map<IEnumerable<Product>, List<ProductDTO>>(events);
+            }
+
+        }
+
+
 
         public void EditCategory(int id, string name)
         {

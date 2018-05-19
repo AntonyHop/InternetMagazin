@@ -13,6 +13,7 @@ namespace InternetMagazine.PL.Interfaces
         void EditCategory(int id, string name);
         void AddCategory(string name);
         void DeleteCategory(int id);
+        IEnumerable<ProductDTO> Search(string s);
 
         void AddProduct(ProductDTO pr);
         void UpdateOneProduct(ProductDTO p);

@@ -15,7 +15,10 @@ namespace InternetMagazine.DAL.Entities
         public int? UserId { get; set; }
         public User User { get; set; }
 
-        public IEnumerable<OrderLine> Products { get; set; }
+        public int? ProductId { get; set; }
+        public  Product Product { get; set; }
+
+        public int Count { get; set; }
 
         public double Price { get; set; }
         public string Status { get; set; }

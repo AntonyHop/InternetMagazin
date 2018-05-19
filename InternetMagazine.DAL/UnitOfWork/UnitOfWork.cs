@@ -13,7 +13,7 @@ namespace InternetMagazine.DAL.UnitOfWork
         private GenericRepository<Product> _products;
         private GenericRepository<User> _users;
         private GenericRepository<Order> _orders;
-        private GenericRepository<OrderLine> _orderLines;
+      
 
         public UnitOfWork(string Connection)
         {
@@ -58,15 +58,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<OrderLine> OrderLines
-        {
-            get
-            {
-                if (_orderLines == null)
-                    _orderLines = new GenericRepository<OrderLine>(ctx);
-                return _orderLines;
-            }
-        }
+       
 
         private bool disposed = false;
 

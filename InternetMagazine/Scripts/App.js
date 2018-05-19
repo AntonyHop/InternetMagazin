@@ -30,6 +30,8 @@ $(function () {
     $(".add").click(function () { 
         swal("Введите название катрегории", {
             content: "input",
+            closeOnClickOutside: false,
+            closeOnEsc: false,
         }).then((res) => {
 
             var CaegoryModel = {

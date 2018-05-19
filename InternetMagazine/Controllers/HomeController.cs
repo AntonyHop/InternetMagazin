@@ -14,13 +14,15 @@ namespace InternetMagazine.Controllers
     public class HomeController : Controller
     {
         ICategoryService svc;
+        IUserService usc;
         MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
         IMapper map;
 
 
-        public HomeController(ICategoryService _svc)
+        public HomeController(ICategoryService _svc, IUserService _usc)
         {
             svc = _svc;
+            usc = _usc;
 
             map = config.CreateMapper();
 
@@ -31,6 +33,9 @@ namespace InternetMagazine.Controllers
 
             var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.books = ct;
+
+           
+           
 
         } 
         public ActionResult Index(int? id)
@@ -48,6 +53,12 @@ namespace InternetMagazine.Controllers
                 IEnumerable<ProductDTO> prod = svc.Products();
                 productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = 0;
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                UserDTO curr = usc.getUserByName(User.Identity.Name);
+                Session["user"] = curr;
             }
 
             ViewBag.CurrentPage = "Index";
@@ -94,6 +105,24 @@ namespace InternetMagazine.Controllers
         {
 
             return View("~/Views/Shared/Error.cshtml");
+        }
+
+        public ActionResult Search(string q)
+        {
+            IEnumerable<ProductDTO> products = null;
+            ViewBag.NotFound = false;
+            try
+            {
+                products = svc.Search(q);
+            }
+            catch (ValidationException ex)
+            {
+                ViewBag.NotFound = true;
+            }
+
+            ViewBag.PageId = 0;
+            ViewBag.CurrentPage = "Index";
+            return View("index", map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(products));
         }
     }
 }

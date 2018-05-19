@@ -10,7 +10,7 @@ namespace InternetMagazine.DAL.EF
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderLine> OrderLines { get; set; }
+      
 
         public EFContext(string connection) : base(connection)
         {   
@@ -26,9 +26,11 @@ namespace InternetMagazine.DAL.EF
         protected override void Seed(EFContext context)
         {
             context.Users.Add(new User { NickName = "Admin", Password= "3b2077ec209a4a5d5b0d3c7d154e4cc5",Age=21, FirstName="Anton" });//AdminRoot
+            context.SaveChanges();
 
             context.Categories.Add(new Category { Name = "Без Ктегории" });
             context.Categories.Add(new Category { Name = "Фантастика" });
+            context.SaveChanges();
 
             context.Products.Add(new Product { Name="Метро 2033", Desc="Постапокалиптический роман",CategoryId = 2,Price=200M });
             context.Products.Add(new Product { Name = "Метро 2034", Desc = "Постапокалиптический роман", CategoryId = 2, Price = 250M });

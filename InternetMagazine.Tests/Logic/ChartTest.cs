@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using InternetMagazine.PL.BuisnessModels;
 using InternetMagazine.PL.DTO;
 using InternetMagazine.PL.Services;
-using InternetMagazine.PL.Interfaces;
 
 namespace InternetMagazine.Tests.Logic
 {

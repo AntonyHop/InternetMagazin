@@ -12,7 +12,7 @@ using InternetMagazine.DAL.Entities;
 
 namespace InternetMagazine.PL.Services
 {
-    class OrderService : IOrderService
+    public class OrderService : IOrderService
     {
         IUnitOfWork uofw;
         MapperConfiguration config = new AutoMapperConfiguration().Configure();
@@ -23,24 +23,47 @@ namespace InternetMagazine.PL.Services
             uofw = _uofw;
             map = config.CreateMapper();
         }
-        public void AddOrder(IEnumerable<OrderItemDTO> orders, double total_price)
+        public void AddOrder(List<OrderItemDTO> orders,UserDTO user)
         {
-            Order order = new Order();
-            order.Price = total_price;
-            order.Products = map.Map<IEnumerable<OrderItemDTO>, List<OrderLine>>(orders);
-            order.Status = "Ordered";
+            foreach(OrderItemDTO or in orders)
+            {
+                Order o = new Order() { ProductId = or.Product.Id,Status="MakeOrder",Price = (double)(or.Count*or.Product.Price),Count = or.Count};
 
-            uofw.Orders.Create(order);
+                o.UserId = user.Id;
+
+                uofw.Orders.Create(o);
+            }
+            
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Order o = uofw.Orders.Get(i => i.Id == id).FirstOrDefault();
+            if(o != null)
+            {
+                uofw.Orders.Remove(o);
+            }
+            else
+            {
+                throw new ValidationException("Заказа не существует", "OrderService");
+            }
         }
+
+       
+
 
         public void SetStatus(int id, string status)
         {
-            throw new NotImplementedException();
+            Order o = uofw.Orders.Get(i => i.Id == id).FirstOrDefault();
+            if (o != null)
+            {
+                o.Status = status;
+                uofw.Orders.Update(o);
+            }
+            else
+            {
+                throw new ValidationException("Заказа не существует", "OrderService");
+            }
         }
     }
 }

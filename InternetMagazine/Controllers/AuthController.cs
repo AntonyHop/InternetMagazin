@@ -48,6 +48,7 @@ namespace InternetMagazine.Controllers
                 {
                     USvc.RegistUser(newUser);
                     FormsAuthentication.SetAuthCookie(model.NickName, true);
+                   
                     return Redirect("/");
                 }
                 catch (UserNotFoundExaption ex)
@@ -69,7 +70,11 @@ namespace InternetMagazine.Controllers
             if (ModelState.IsValid)
             {
                 bool state = false;
-                try { state = USvc.LoginVerify(model.NickName, model.Password); }
+                try {
+                    state = USvc.LoginVerify(model.NickName, model.Password);
+                    UserDTO user = USvc.getUserByName(model.NickName);
+                    Session["user"] = user;
+                }
                 catch(UserNotFoundExaption ex)
                 {
                     ModelState.AddModelError(ex.Property, ex.Message);

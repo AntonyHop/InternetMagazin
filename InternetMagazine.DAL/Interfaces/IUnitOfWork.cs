@@ -11,6 +11,6 @@ namespace InternetMagazine.DAL.Interfaces
         GenericRepository<Product> Products { get; }
         GenericRepository<User> Users { get; }
         GenericRepository<Order> Orders { get; }
-        GenericRepository<OrderLine> OrderLines { get; }
+      
     }
 }

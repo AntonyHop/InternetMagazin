@@ -16,7 +16,7 @@ namespace InternetMagazine.PL.Infrastructure
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<OrderLine, OrderItemDTO>().ReverseMap();
+           
         }
     }
 }
