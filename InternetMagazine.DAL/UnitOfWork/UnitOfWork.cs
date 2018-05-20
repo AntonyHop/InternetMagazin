@@ -9,10 +9,10 @@ namespace InternetMagazine.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private EFContext ctx;
-        private GenericRepository<Category> _categories;
-        private GenericRepository<Product> _products;
-        private GenericRepository<User> _users;
-        private GenericRepository<Order> _orders;
+        private IGenericRepository<Category> _categories;
+        private IGenericRepository<Product> _products;
+        private IGenericRepository<User> _users;
+        private IGenericRepository<Order> _orders;
       
 
         public UnitOfWork(string Connection)
@@ -20,7 +20,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             ctx = new EFContext(Connection);
         }
 
-        public GenericRepository<Category> Categories {
+        public IGenericRepository<Category> Categories {
             get {
                 if (_categories == null)
                     _categories = new GenericRepository<Category>(ctx);
@@ -28,7 +28,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<Product> Products
+        public IGenericRepository<Product> Products
         {
             get
             {
@@ -38,7 +38,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<User> Users
+        public IGenericRepository<User> Users
         {
             get
             {
@@ -48,7 +48,7 @@ namespace InternetMagazine.DAL.UnitOfWork
             }
         }
 
-        public GenericRepository<Order> Orders
+        public IGenericRepository<Order> Orders
         {
             get
             {
