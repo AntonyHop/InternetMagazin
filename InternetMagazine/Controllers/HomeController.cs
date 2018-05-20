@@ -14,15 +14,13 @@ namespace InternetMagazine.Controllers
     public class HomeController : Controller
     {
         ICategoryService svc;
-        IUserService usc;
         MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
         IMapper map;
 
 
-        public HomeController(ICategoryService _svc, IUserService _usc)
+        public HomeController(ICategoryService _svc)
         {
             svc = _svc;
-            usc = _usc;
 
             map = config.CreateMapper();
 
@@ -55,11 +53,6 @@ namespace InternetMagazine.Controllers
                 ViewBag.PageId = 0;
             }
 
-            if (User.Identity.IsAuthenticated)
-            {
-                UserDTO curr = usc.getUserByName(User.Identity.Name);
-                Session["user"] = curr;
-            }
 
             ViewBag.CurrentPage = "Index";
             return View(productsvm);

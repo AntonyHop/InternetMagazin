@@ -103,8 +103,8 @@
   <ItemGroup>
     <Compile Include="Dal\EFContextTest.cs" />
     <Compile Include="Dal\IGenericRepositoryTest.cs" />
+    <Compile Include="Logic\CategoryServiceTest.cs" />
     <Compile Include="Logic\ChartTest.cs" />
-    <Compile Include="Logic\CryptTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
