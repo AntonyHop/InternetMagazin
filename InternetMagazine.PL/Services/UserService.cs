@@ -141,14 +141,20 @@ namespace InternetMagazine.PL.Services
         public void RemoveUser(int? id)
         {
             User curr = Db.Users.Get(u => u.Id == id).LastOrDefault();
-            if (curr == null)
-            {
+            if (curr == null)           
                 throw new UserNotFoundExaption("Пользователь не найден", "UserService");
-            }
-            else
+
+            IEnumerable<Order> or = Db.Orders.Get(o => o.UserId == curr.Id);
+            if(or.Count() != 0)
             {
-                Db.Users.Remove(curr);
+                foreach(Order o in or)
+                {
+                    Db.Orders.Remove(o);
+                }
             }
+
+            Db.Users.Remove(curr);
+            
         }
     }
 }

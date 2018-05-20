@@ -13,7 +13,7 @@ namespace InternetMagazine.Tests.Logic
     [TestClass]
     public class OrderServiceTest
     {
-      /*  [TestMethod]
+       [TestMethod]
         public void Orsers_Get_All()
         {
             MOCKUnitOfWork muof = new MOCKUnitOfWork();
@@ -35,7 +35,7 @@ namespace InternetMagazine.Tests.Logic
 
             try
             {
-                sw.
+                sw.Delete(-20);
             }
             catch (Exception ex)
             {
@@ -44,6 +44,26 @@ namespace InternetMagazine.Tests.Logic
 
             Assert.IsNotNull(outex);
         }
-        */
+
+        [TestMethod]
+        public void Order_Service_Serch_if_user_NF()
+        {
+            MOCKUnitOfWork muof = new MOCKUnitOfWork();
+            OrderService sw = new OrderService(muof);
+
+            Exception outex = null;
+
+            try
+            {
+                sw.getOrdersByUserId(-5);
+            }
+            catch (Exception ex)
+            {
+                outex = ex;
+            }
+
+            Assert.IsNotNull(outex);
+        }
+
     }
 }

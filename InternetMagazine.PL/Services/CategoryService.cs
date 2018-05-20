@@ -165,9 +165,17 @@ namespace InternetMagazine.PL.Services
             Product geted = Db.Products.Get(c => c.Id == id).FirstOrDefault();
 
             if (geted == null)
-            {
                throw new ValidationException("Товара нет", "CategoryService");
+
+            IEnumerable<Order> or = Db.Orders.Get(o => o.ProductId == id);
+            if (or.Count() != 0)
+            {
+                foreach (Order o in or)
+                {
+                    Db.Orders.Remove(o);
+                }
             }
+
             Db.Products.Remove(geted);
         }
 

@@ -20,6 +20,16 @@ namespace InternetMagazine.PL.Services
             uofw = _uofw;
             map = config.CreateMapper();
         }
+
+        public IEnumerable<OrderItemDTO> Orders()
+        {
+            IEnumerable<Order> or = uofw.Orders.GetWithInclude(o => o.Product, o => o.User);
+            if (or == null)
+                throw new ValidationException("not found orders", "OrderService");
+
+            return map.Map<IEnumerable<Order>, List<OrderItemDTO>>(or);
+        }
+
         public void AddOrder(List<OrderItemDTO> orders,UserDTO user)
         {
             foreach(OrderItemDTO or in orders)
@@ -46,8 +56,19 @@ namespace InternetMagazine.PL.Services
             }
         }
 
-       
+        public IEnumerable<OrderItemDTO> getOrdersByUserId(int? id)
+        {
+            if (id == null)
+                throw new ValidationException("Bad Params", "OrderService");
 
+
+            IEnumerable<Order> orders = uofw.Orders.Get(o => o.UserId == id);
+
+            if (orders.Count() == 0)
+                throw new ValidationException("Orders not found", "OrderService");
+
+            return map.Map<IEnumerable<Order>, List<OrderItemDTO>>(orders);
+        }
 
         public void SetStatus(int id, string status)
         {
