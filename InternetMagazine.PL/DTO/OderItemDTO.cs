@@ -8,7 +8,9 @@ namespace InternetMagazine.PL.DTO
 {
     public class OrderItemDTO
     {
+        public int Id { get; set; }
         public ProductDTO Product { get; set; }
+        public UserDTO User { get; set; }
         public int Count { get; set; }
     }
 }

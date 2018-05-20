@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InternetMagazine.Models;
 using InternetMagazine.PL.DTO;
+using InternetMagazine.PL.Infrastructure;
 using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.Services;
 using InternetMagazine.Util;
@@ -81,7 +82,16 @@ namespace InternetMagazine.Controllers
 
         public ActionResult Orders()
         {
-            return View();
+            IEnumerable<OrderItemDTO> orders = null;
+            try
+            {
+               orders = ord.Orders();
+            }catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+           
+            return View(orders);
         }
 
         public OrderLogic GetOrder()
@@ -95,5 +105,6 @@ namespace InternetMagazine.Controllers
             return cart;
         }
 
+       
     }
 }

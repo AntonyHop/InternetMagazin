@@ -6,6 +6,7 @@ using InternetMagazine.PL.Infrastructure;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using InternetMagazine.Util;
+using System.Web.Security;
 
 namespace InternetMagazine.Controllers
 {
@@ -24,12 +25,17 @@ namespace InternetMagazine.Controllers
         public ActionResult Index()
         {
             ViewBag.CurrentPage = "Account";
-
+            UserDTO curr;
             if (!User.Identity.IsAuthenticated)
                 return Redirect("/");
-
-            UserDTO curr = USvc.getUserByName(User.Identity.Name);
-
+            try
+            {
+                curr = USvc.getUserByName(User.Identity.Name);
+            }catch(UserNotFoundExaption ex)
+            {
+                FormsAuthentication.SignOut();
+                return Redirect("/Auth");
+            }
             return View(map.Map<UserDTO, RegistViewModel>(curr));
         }
 
@@ -104,8 +110,18 @@ namespace InternetMagazine.Controllers
         {
             if(id > 1 || id != null)
             {
-                USvc.RemoveUser(id);
+                try
+                {
+                    USvc.RemoveUser(id);
+                }catch(UserNotFoundExaption ex)
+                {
+                    FormsAuthentication.SignOut();
+                }
+              
+
+              
                 return  Content("done");
+                
             }
             else
             {
