@@ -44,7 +44,7 @@ namespace InternetMagazine.Tests.MOCK
                 {
                     var stub = new Mock<IGenericRepository<Category>>();
                     stub.Setup(ld => ld.Get()).Returns(cat);
-
+                   
                     _categories = stub.Object;
 
                   

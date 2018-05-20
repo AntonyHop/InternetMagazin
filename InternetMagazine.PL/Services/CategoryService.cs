@@ -166,7 +166,7 @@ namespace InternetMagazine.PL.Services
 
             if (geted == null)
             {
-                throw new ValidationException("Товара нет", "CategoryService");
+               throw new ValidationException("Товара нет", "CategoryService");
             }
             Db.Products.Remove(geted);
         }
