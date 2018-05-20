@@ -42,6 +42,28 @@ namespace InternetMagazine.Tests.Logic
         }
 
         [TestMethod]
+        public void Search_test()
+        {
+            MOCKUnitOfWork muof = new MOCKUnitOfWork();
+            CategoryService sw = new CategoryService(muof);
+
+            Exception outex = null;
+
+            try
+            {
+                sw.Search("dfkgj");
+            }
+            catch (Exception ex)
+            {
+                outex = ex;
+            }
+
+            Assert.IsNotNull(outex);
+        }
+
+
+
+        [TestMethod]
         public void Del_Not_Exists_Product()
         {
             MOCKUnitOfWork muof = new MOCKUnitOfWork();

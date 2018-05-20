@@ -104,6 +104,5 @@ namespace InternetMagazine.Tests.Logic
 
             Assert.IsNotNull(outex);
         }
-
     }
 }
