@@ -146,6 +146,28 @@ $(function () {
         });
     });
 
+    $("table .deleteOrder").click(function () {
+        elem = $(this);
+        swal({
+            title: "Удалить текущий заказ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.get("/Chart/RemoveOrder/" + $(this).data("id"), function (data) {
+                    if (data == "done") {
+                        swal("Отлично", "Заказ удален", "success");
+                        $(elem).parent().parent().hide();
+                    } else {
+                        swal("Заказ не удален", data, "error");
+                    }
+                })
+            }
+
+        });
+    });
+
     $("table .deleteUser").click(function () {
         elem = $(this);
         swal({

@@ -29,6 +29,7 @@ namespace InternetMagazine.Controllers
             {
                 UserDTO curr = USvc.getUserByName(User.Identity.Name);
                 Session["user"] = curr;
+
                 return Redirect("/User");
             }
             

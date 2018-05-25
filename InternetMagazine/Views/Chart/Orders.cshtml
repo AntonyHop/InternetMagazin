@@ -5,15 +5,27 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Orders</h2>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1>Orders</h1>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table table-bordered">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Count)
+            Product
+        </th>
+
+        <th>
+            Count
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Mobule
         </th>
         <th></th>
     </tr>
@@ -27,11 +39,17 @@
             @Html.DisplayFor(modelItem => item.Count)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
+            @Html.DisplayFor(modelItem => (item.User.FirstName))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => (item.User.LastName))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Mobule)
         </td>
         <td>
            
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <span class="operation deleteOrder" data-id="@item.Id">Удалить</span>
         </td>
     </tr>
 }

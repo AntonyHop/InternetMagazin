@@ -6,6 +6,8 @@
 }
 
 <div class="col-md-6 container mt-3">
+    @if (Model.Count() != 0)
+    {
     <h2>Корзина</h2>
 
     <table class="table">
@@ -27,29 +29,44 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.Price)
-                </td>
-                <td style="text-align:center">
-                    <span>
-                        <a href="/Chart/Plus/@item.Product.Id">+</a>
-                        @Html.DisplayFor(modelItem => item.Count)
-                        <a href="/Chart/Minus/@item.Product.Id">-</a>
-                    </span>
-                </td>
-                <th>
-                    <a href="/Chart/Remove/@item.Product.Id">Удалить</a>
-                </th>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Price)
+            </td>
+            <td style="text-align:center">
+                <span>
+                    <a href="/Chart/Plus/@item.Product.Id">+</a>
+                    @Html.DisplayFor(modelItem => item.Count)
+                    <a href="/Chart/Minus/@item.Product.Id">-</a>
+                </span>
+            </td>
+            <th>
+                <a href="/Chart/Remove/@item.Product.Id">Удалить</a>
+            </th>
+        </tr>
         }
+   
     </table>
-    <div class="d-flex flex-row justify-content-end">
+    <div class="d-flex flex-row justify-content-between">
         <span><strong>Итого:</strong>@ViewBag.Price</span>
-        <a href="/Order/MakeOrder" class="btn btn-primary">Зкакзать</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/Chart/MakeOrder" class="btn btn-primary">Зкакзать</a>
+        }
+        else
+        {
+            <a href="/Auth?redirect=`/Chart`" class="btn btn-primary">Зкакзать</a>
+        }
     </div>
+    }
+    else
+    {
+        <h3 class="mt-5 mb-2 text-center">Товаров в корзине нету</h3>
+        <p class="text-center mb-5">Пожалуйста сначала выберете <a href="/home">что-нибуть</a></p>
+    }
 </div>
+
 

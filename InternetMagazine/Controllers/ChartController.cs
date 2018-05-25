@@ -64,13 +64,17 @@ namespace InternetMagazine.Controllers
         public ActionResult MakeOrder()
         {
             UserDTO u = (UserDTO)Session["user"];
-            if(u != null)
+            if(u != null && User.Identity.IsAuthenticated)
             {
                 List<OrderItemDTO> its = GetOrder().Lines.ToList();
 
                 ord.AddOrder(its,u);
+
+                GetOrder().Clear();
+                return View();
             }
-            return Content("OrderCreate");
+            return Redirect("/Home/Error");
+           
         }
 
         public ActionResult Minus(int id)
@@ -91,7 +95,22 @@ namespace InternetMagazine.Controllers
                 ModelState.AddModelError(ex.Property, ex.Message);
             }
            
-            return View(orders);
+            return View(map.Map< IEnumerable<OrderItemDTO> ,List<OrderItemVIewModel>>(orders));
+        }
+
+
+        public ActionResult RemoveOrder(int id)
+        {
+            try
+            {
+                ord.Delete(id);
+            }catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return Content(ex.Message);
+            }
+
+            return Content("done");
         }
 
         public OrderLogic GetOrder()
