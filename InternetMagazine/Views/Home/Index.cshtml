@@ -4,6 +4,19 @@
 @{
     ViewBag.Title = "Главная";
 }
+@if (ViewBag.IdSortParam != null)
+{
+    <div class="row col-md-12 flex flex-row justify-content-end mt-2">
+        <div>
+            <strong>Сортировать по: </strong>
+            @Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdSortParam })
+            @Html.ActionLink("Категории", "Index", new { sortOrder = ViewBag.CatSortParam })
+            @Html.ActionLink("Цене", "Index", new { sortOrder = ViewBag.PriceSortParam })
+            @Html.ActionLink("Автору", "Index", new { sortOrder = ViewBag.AuthorSortParam })
+            
+        </div>
+    </div>
+}
 
 <div class="container body-content">
     <div class="row">

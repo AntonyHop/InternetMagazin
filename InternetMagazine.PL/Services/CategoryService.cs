@@ -25,23 +25,84 @@ namespace InternetMagazine.PL.Services
 
         public IEnumerable<CategoryDTO> Categories()
         {
-            
+           
             return map.Map<IEnumerable<Category>, List<CategoryDTO>>(Db.Categories.Get());
         }
 
-        public IEnumerable<ProductDTO> LoadProductsCategory(int? catId)
+        public IEnumerable<ProductDTO> LoadProductsCategory(int? catId,string param="id")
         {
             if (catId == null) 
                 throw new ValidationException("Категории не существует", "CategoryService");
 
-            IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Id);
-        
+            IEnumerable<Product> products = null;
+
+            switch (param)
+            {
+                case "id":
+                    products = Db.Products.GetWithInclude(p=>p.CategoryId == catId,p => p.Category).OrderByDescending(p => p.Id);
+                    break;
+                case "cat":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.CategoryId);
+                    break;
+                case "author":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Author);
+                    break;
+                case "price":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderByDescending(p => p.Price);
+                    break;
+                case "priceASC":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderBy(p => p.Price);
+                    break;
+                case "authorASC":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderBy(p => p.Author);
+                    break;
+                case "catASC":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderBy(p => p.CategoryId);
+                    break;
+                case "idASC":
+                    products = Db.Products.GetWithInclude(p => p.CategoryId == catId, p => p.Category).OrderBy(p => p.Id);
+                    break;
+                default:
+                    products = Db.Products.GetWithInclude(p=>p.CategoryId == catId,p => p.Category).OrderByDescending(p => p.Id);
+                    break;
+            }
+
             return map.Map<IEnumerable<Product>, List<ProductDTO>>(products); 
         }
 
-        public IEnumerable<ProductDTO> Products()
+        public IEnumerable<ProductDTO> Products(string param="id")
         {
-            IEnumerable<Product> products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Id);
+            IEnumerable<Product> products=null;
+            switch (param) {
+                case "id":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Id);
+                    break;
+                case "cat":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.CategoryId);
+                    break;
+                case "author":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Author);
+                    break;
+                case "price":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Price);
+                    break;
+                case "priceASC":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderBy(p => p.Price);
+                    break;
+                case "authorASC":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderBy(p => p.Author);
+                    break;
+                case "catASC":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderBy(p => p.CategoryId);
+                    break;
+                case "idASC":
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderBy(p => p.Id);
+                    break;
+                default:
+                    products = Db.Products.GetWithInclude(p => p.Category).OrderByDescending(p => p.Id);
+                    break;
+            }
+           
             return map.Map<IEnumerable<Product>, List<ProductDTO>>(products);
         }
 
@@ -165,9 +226,17 @@ namespace InternetMagazine.PL.Services
             Product geted = Db.Products.Get(c => c.Id == id).FirstOrDefault();
 
             if (geted == null)
+               throw new ValidationException("Товара нет", "CategoryService");
+
+            IEnumerable<Order> or = Db.Orders.Get(o => o.ProductId == id);
+            if (or.Count() != 0)
             {
-                throw new ValidationException("Товара нет", "CategoryService");
+                foreach (Order o in or)
+                {
+                    Db.Orders.Remove(o);
+                }
             }
+
             Db.Products.Remove(geted);
         }
 

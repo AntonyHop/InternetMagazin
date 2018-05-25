@@ -1,0 +1,57 @@
+﻿@model IEnumerable<InternetMagazine.Models.OrderItemVIewModel>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1>Заказы</h1>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Product
+        </th>
+
+        <th>
+            Count
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Mobule
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => (item.User.FirstName))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => (item.User.LastName))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Mobule)
+        </td>
+        <td>
+           
+            <span class="operation deleteOrder" data-id="@item.Id">Удалить</span>
+        </td>
+    </tr>
+}
+
+</table>

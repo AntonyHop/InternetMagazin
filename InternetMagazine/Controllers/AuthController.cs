@@ -26,7 +26,13 @@ namespace InternetMagazine.Controllers
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
+            {
+                UserDTO curr = USvc.getUserByName(User.Identity.Name);
+                Session["user"] = curr;
+
                 return Redirect("/User");
+            }
+            
             return View();
         }
 

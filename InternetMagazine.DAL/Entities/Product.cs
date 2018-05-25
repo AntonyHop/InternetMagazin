@@ -24,5 +24,7 @@ namespace InternetMagazine.DAL.Entities
 
         [MaxLength(50)]
         public string ImgUrl { get; set; }
+
+        public int CountOfpay { get; set; }
     }
 }

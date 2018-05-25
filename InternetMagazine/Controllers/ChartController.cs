@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InternetMagazine.Models;
 using InternetMagazine.PL.DTO;
+using InternetMagazine.PL.Infrastructure;
 using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.Services;
 using InternetMagazine.Util;
@@ -63,13 +64,17 @@ namespace InternetMagazine.Controllers
         public ActionResult MakeOrder()
         {
             UserDTO u = (UserDTO)Session["user"];
-            if(u != null)
+            if(u != null && User.Identity.IsAuthenticated)
             {
                 List<OrderItemDTO> its = GetOrder().Lines.ToList();
 
                 ord.AddOrder(its,u);
+
+                GetOrder().Clear();
+                return View();
             }
-            return Content("OrderCreate");
+            return Redirect("/Home/Error");
+           
         }
 
         public ActionResult Minus(int id)
@@ -81,7 +86,31 @@ namespace InternetMagazine.Controllers
 
         public ActionResult Orders()
         {
-            return View();
+            IEnumerable<OrderItemDTO> orders = null;
+            try
+            {
+               orders = ord.Orders();
+            }catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+            }
+           
+            return View(map.Map< IEnumerable<OrderItemDTO> ,List<OrderItemVIewModel>>(orders));
+        }
+
+
+        public ActionResult RemoveOrder(int id)
+        {
+            try
+            {
+                ord.Delete(id);
+            }catch(ValidationException ex)
+            {
+                ModelState.AddModelError(ex.Property, ex.Message);
+                return Content(ex.Message);
+            }
+
+            return Content("done");
         }
 
         public OrderLogic GetOrder()
@@ -95,5 +124,6 @@ namespace InternetMagazine.Controllers
             return cart;
         }
 
+       
     }
 }

@@ -12,7 +12,11 @@
     {
         <div class="pull-right">
             @Html.HiddenFor(Model => Model.Id)
-            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+            @if (User.Identity.IsAuthenticated)
+            {
+                <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+            }
+           
         </div>
     }
 </div>

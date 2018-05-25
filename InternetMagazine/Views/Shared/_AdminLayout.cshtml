@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/dashboard.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/Chart.min.js")
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     
 </head>
@@ -33,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/Chart/Orders">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                 Заказы
                             </a>
@@ -57,7 +58,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/Stat/Index">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                                 Статистика
                             </a>
@@ -94,6 +95,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/App.js")
     @Scripts.Render("~/Scripts/sweetalert.min.js")
+   
     @RenderSection("scripts", required: false)
 </body>
 </html>

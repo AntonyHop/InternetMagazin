@@ -19,5 +19,7 @@ namespace InternetMagazine.PL.DTO
         public CategoryDTO Category { get; set; }
 
         public string ImgUrl { get; set; }
+
+        public int CountOfpay { get; set; }
     }
 }
