@@ -6,8 +6,8 @@ namespace InternetMagazine.PL.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<ProductDTO> LoadProductsCategory(int? catId);
-        IEnumerable<ProductDTO> Products();
+        IEnumerable<ProductDTO> LoadProductsCategory(int? catId, string param = "id");
+        IEnumerable<ProductDTO> Products(string param);
         IEnumerable<CategoryDTO> Categories();
         ProductDTO GetOneProduct(int? id);
         void EditCategory(int id, string name);

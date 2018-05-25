@@ -36,19 +36,23 @@ namespace InternetMagazine.Controllers
            
 
         } 
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id,string sortOrder = "id")
         {
+            ViewBag.IdSortParam = sortOrder == "id" ? "idASC" : "id";
+            ViewBag.CatSortParam = sortOrder == "cat" ? "catASC" : "cat";
+            ViewBag.PriceSortParam = sortOrder == "price" ? "priceASC" : "price";
+            ViewBag.AuthorSortParam = sortOrder == "author" ? "authorASC" : "author";
 
             IEnumerable<ProductViewModel> productsvm;
 
             
             if (id != null && id > 0)
             {
-               IEnumerable<ProductDTO> prod = svc.LoadProductsCategory(id);
+               IEnumerable<ProductDTO> prod = svc.LoadProductsCategory(id, sortOrder);
                productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = id;
             }else{
-                IEnumerable<ProductDTO> prod = svc.Products();
+                IEnumerable<ProductDTO> prod = svc.Products(sortOrder);
                 productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
                 ViewBag.PageId = 0;
             }

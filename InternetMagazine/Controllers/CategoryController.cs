@@ -64,9 +64,9 @@ namespace InternetMagazine.Controllers
             return Json("ok");
         }
 
-        public ActionResult Products()
+        public ActionResult Products(string sortOrder="id")
         {
-            IEnumerable<ProductDTO> prod = CSvc.Products();
+            IEnumerable<ProductDTO> prod = CSvc.Products(sortOrder);
             IEnumerable<ProductViewModel>  productsvm = map.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(prod);
 
             return View(productsvm);
