@@ -12,5 +12,6 @@ namespace InternetMagazine.PL.DTO
         public ProductDTO Product { get; set; }
         public UserDTO User { get; set; }
         public int Count { get; set; }
+
     }
 }

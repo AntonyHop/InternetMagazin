@@ -37,6 +37,10 @@ namespace InternetMagazine.PL.Services
                 Order o = new Order() { ProductId = or.Product.Id,Status="MakeOrder",Price = (double)(or.Count*or.Product.Price),Count = or.Count};
 
                 o.UserId = user.Id;
+                //Для статистики считаем количество покупок товара.
+                Product p = uofw.Products.Get(i => i.Id == or.Product.Id).FirstOrDefault();
+                p.CountOfpay++;
+                uofw.Products.Update(p);
 
                 uofw.Orders.Create(o);
             }
