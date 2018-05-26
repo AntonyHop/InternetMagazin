@@ -47,6 +47,8 @@ namespace InternetMagazine.PL.Services
             
         }
 
+       
+
         public void Delete(int id)
         {
             Order o = uofw.Orders.Get(i => i.Id == id).FirstOrDefault();
@@ -60,13 +62,20 @@ namespace InternetMagazine.PL.Services
             }
         }
 
-        public IEnumerable<OrderItemDTO> getOrdersByUserId(int? id)
+        public IEnumerable<OrderItemDTO> getOrdersByUserId(int? id, int? count)
         {
             if (id == null)
                 throw new ValidationException("Bad Params", "OrderService");
-
-
-            IEnumerable<Order> orders = uofw.Orders.Get(o => o.UserId == id);
+            IEnumerable<Order> orders = null;
+            if (count == null)
+            {
+                orders = uofw.Orders.Get(o => o.UserId == id);
+            }
+            else
+            {
+                orders = uofw.Orders.Get(o => o.UserId == id).Take(count.Value);
+            }
+            
 
             if (orders.Count() == 0)
                 throw new ValidationException("Orders not found", "OrderService");

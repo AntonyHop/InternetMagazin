@@ -31,16 +31,30 @@ namespace InternetMagazine.Controllers
             try
             {
                 curr = USvc.getUserByName(User.Identity.Name);
-            }catch(UserNotFoundExaption ex)
+            }
+            catch(UserNotFoundExaption ex)
             {
                 FormsAuthentication.SignOut();
                 return Redirect("/Auth");
             }
+            try
+            {
+                ViewBag.LastOrders = map.Map<IEnumerable<OrderItemDTO>, List<OrderItemVIewModel>>(USvc.getOrdersByUserId(curr.Id, 5));
+            }catch(ValidationException ex)
+            {
+                ViewBag.LastOrders = null;
+            }
+            
+
             return View(map.Map<UserDTO, RegistViewModel>(curr));
         }
 
         public ActionResult Users()
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Redirect("/Home/Error");
+
             try
             {
                 IEnumerable<UserDTO> users = USvc.GetUsers();
@@ -56,6 +70,10 @@ namespace InternetMagazine.Controllers
 
         public ActionResult Edit(int? id)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Redirect("/Home/Error");
+
             try
             {
                 UserDTO ud = USvc.getUserById(id);
@@ -72,6 +90,10 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult Edit(RegistViewModel model)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Redirect("/Home/Error");
+
             try
             {
                 USvc.UpdateUser(map.Map<RegistViewModel, UserDTO>(model));
@@ -92,6 +114,10 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult Add(RegistViewModel model)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Redirect("/Home/Error");
+
             UserDTO newUser = map.Map<RegistViewModel, UserDTO>(model);
             try
             {
@@ -108,7 +134,12 @@ namespace InternetMagazine.Controllers
 
         public ActionResult Delete(int? id)
         {
-            if(id > 1 || id != null)
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Content("Пользователь не удален нет прав");
+
+
+            if (id > 1 || id != null)
             {
                 try
                 {
@@ -125,7 +156,7 @@ namespace InternetMagazine.Controllers
             }
             else
             {
-                return Content("Пользователь не добавлен");
+                return Content("Пользователь не удален");
             }
            
         }
