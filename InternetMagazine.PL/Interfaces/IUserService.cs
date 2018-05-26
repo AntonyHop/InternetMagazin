@@ -15,5 +15,6 @@ namespace InternetMagazine.PL.Interfaces
         UserDTO getUserByName(string name);
         UserDTO getUserById(int? id);
         void UpdateUser(UserDTO user);
+        IEnumerable<OrderItemDTO> getOrdersByUserId(int? id, int? count);
     }
 }

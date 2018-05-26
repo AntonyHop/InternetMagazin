@@ -127,10 +127,12 @@ namespace InternetMagazine.PL.Services
         public void UpdateOneProduct(ProductDTO p)
         {
 
-            if (p.Name.Length > 20)
+            if (p.Name.Length > 100)
                 throw new ValidationException("Слижком большое название товара", "Category service");
-            if (p.Desc.Length > 255)
+            if (p.Desc.Length > 1055)
                 throw new ValidationException("Слижком большое описание товара", "Category service");
+            if (p.Author.Length > 100)
+                throw new ValidationException("Слижком большое название автора", "Category service");
 
             Product geted = Db.Products.Get(c => c.Id == p.Id).FirstOrDefault();
           
@@ -177,10 +179,12 @@ namespace InternetMagazine.PL.Services
 
         public void AddProduct(ProductDTO pr)
         {
-            if(pr.Name.Length > 20)
+            if(pr.Name.Length > 100)
                 throw new ValidationException("Слижком большое название товара", "Category service");
-            if (pr.Desc.Length > 255)
+            if (pr.Desc.Length > 1055)
                 throw new ValidationException("Слижком большое описание товара", "Category service");
+            if (pr.Author.Length > 100)
+                throw new ValidationException("Слижком большое название автора", "Category service");
 
             var Product = map.Map<ProductDTO,Product>(pr);
             Db.Products.Create(Product);

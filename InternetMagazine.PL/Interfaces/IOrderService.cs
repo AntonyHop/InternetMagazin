@@ -10,6 +10,6 @@ namespace InternetMagazine.PL.Interfaces
         IEnumerable<OrderItemDTO> Orders();
         void Delete(int id);
         void SetStatus(int id, string status);
-        IEnumerable<OrderItemDTO> getOrdersByUserId(int? id);
+        IEnumerable<OrderItemDTO> getOrdersByUserId(int? id, int? count);
     }
 }

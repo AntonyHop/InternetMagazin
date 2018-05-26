@@ -4,7 +4,43 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1>Пользователь @Model.FirstName @Model.LastName</h1>
+    <h1><i class="fa fa-user"></i> Пользователь @Model.FirstName @Model.LastName</h1>
 </div>
 
+<div class="col-md-12">
+    <p>Ник: <strong>@Model.NickName</strong></p>
+    @if (@Model.Address != null)
+    {
+        <p>Домашний адрес: <strong>@Model.Address</strong></p>
+    }
+    
+    @if (@Model.Mobule != null)
+    {
+        <p>Номер телефона: <strong>@Model.Mobule</strong></p>
+    }
+
+    @if (ViewBag.LastOrders != null)
+    {
+        <h5>Недавно купленые товары:</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td><b>Название товара</b></td>
+                    <td><b>Колличество</b></td>
+                    <td><b>Стоимость</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (InternetMagazine.Models.OrderItemVIewModel item in ViewBag.LastOrders)
+                {
+                    <tr>
+                        <td><a href="/Home/ProductItem/@item.Product.Id">@item.Product.Name</a></td>
+                        <td>@item.Count</td>
+                        <td>@(item.Product.Price * item.Count)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 

@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.Author)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Desc)
+            @CategoryService.CutText(item.Desc)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)

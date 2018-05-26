@@ -36,6 +36,15 @@ namespace InternetMagazine.Controllers
                 FormsAuthentication.SignOut();
                 return Redirect("/Auth");
             }
+            try
+            {
+                ViewBag.LastOrders = map.Map<IEnumerable<OrderItemDTO>, List<OrderItemVIewModel>>(USvc.getOrdersByUserId(curr.Id, 5));
+            }catch(ValidationException ex)
+            {
+                ViewBag.LastOrders = null;
+            }
+            
+
             return View(map.Map<UserDTO, RegistViewModel>(curr));
         }
 

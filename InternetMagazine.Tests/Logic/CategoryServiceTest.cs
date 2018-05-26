@@ -132,12 +132,17 @@ namespace InternetMagazine.Tests.Logic
         {
             MOCKUnitOfWork muof = new MOCKUnitOfWork();
             CategoryService sw = new CategoryService(muof);
-
             Exception outex = null;
+            string dummy = "";
+            
+            for(int i = 0; i < 105; i++)
+            {
+                dummy += "1";
+            }
 
             try
             {
-                sw.AddProduct(new ProductDTO() { Name="111111111111111111111111111111"});
+                sw.AddProduct(new ProductDTO() { Name = dummy });
 
             }
             catch (Exception ex)

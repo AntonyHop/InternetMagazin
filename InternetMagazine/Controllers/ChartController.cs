@@ -18,13 +18,15 @@ namespace InternetMagazine.Controllers
 
         ICategoryService cats;
         IOrderService ord;
+        IUserService us;
         MapperConfiguration config = new ViewAutoMapperConfiguration().Configure();
         IMapper map;
 
-        public ChartController(ICategoryService _cats,IOrderService _ord)
+        public ChartController(ICategoryService _cats,IOrderService _ord,IUserService _us)
         {
             cats = _cats;
             ord = _ord;
+            us = _us;
 
             map = config.CreateMapper();
 
@@ -64,8 +66,15 @@ namespace InternetMagazine.Controllers
         public ActionResult MakeOrder()
         {
             UserDTO u = (UserDTO)Session["user"];
+
+            if(u == null && User.Identity.IsAuthenticated)
+            {
+                u = us.getUserByName(User.Identity.Name);
+            }
+
             if(u != null && User.Identity.IsAuthenticated)
             {
+                
                 List<OrderItemDTO> its = GetOrder().Lines.ToList();
 
                 ord.AddOrder(its,u);
@@ -73,6 +82,7 @@ namespace InternetMagazine.Controllers
                 GetOrder().Clear();
                 return View();
             }
+
             return Redirect("/Home/Error");
            
         }

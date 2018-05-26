@@ -7,13 +7,14 @@ namespace InternetMagazine.DAL.Entities
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(100)]
         [Required]
         public string Name { get; set; }
 
+        [MaxLength(100)]
         public string Author { get; set; }
 
-        [MaxLength(255)]
+        [MaxLength(1055)]
         public string Desc { get; set; }
 
         public decimal Price { get; set; }

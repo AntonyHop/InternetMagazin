@@ -54,6 +54,27 @@ namespace InternetMagazine.PL.Services
             }    
         }
 
+        public IEnumerable<OrderItemDTO> getOrdersByUserId(int? id, int? count)
+        {
+            if (id == null)
+                throw new ValidationException("Bad Params", "OrderService");
+            IEnumerable<Order> orders = null;
+            if (count == null)
+            {
+                orders = Db.Orders.GetWithInclude(u => u.UserId == id, c => c.Product).OrderByDescending(i => i.Id);
+            }
+            else
+            {
+                orders = Db.Orders.GetWithInclude(u => u.UserId == id, c => c.Product).Take(count.Value).OrderByDescending(i=>i.Id);
+            }
+
+
+            if (orders.Count() == 0)
+                throw new ValidationException("Orders not found", "OrderService");
+
+            return map.Map<IEnumerable<Order>, List<OrderItemDTO>>(orders);
+        }
+
         public UserDTO getUserByName(string name)
         {
             User curr = Db.Users.Get(u => u.NickName == name).LastOrDefault();
