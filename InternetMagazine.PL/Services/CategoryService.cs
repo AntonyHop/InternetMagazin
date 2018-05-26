@@ -135,6 +135,9 @@ namespace InternetMagazine.PL.Services
                 throw new ValidationException("Слижком большое название автора", "Category service");
 
             Product geted = Db.Products.Get(c => c.Id == p.Id).FirstOrDefault();
+
+            if (p.ImgUrl == "" || p.ImgUrl == null)
+                p.ImgUrl = geted.ImgUrl;
           
             if (geted != null)
             {
