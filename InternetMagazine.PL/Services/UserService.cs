@@ -123,6 +123,8 @@ namespace InternetMagazine.PL.Services
 
         public void RegistUser(UserDTO user)
         {
+            if(user.Password.Length < 4)
+                throw new UserNotFoundExaption("Пароль слижком мал", "UserService");
             user.Password = Crypt.GetMd5Hash(user.Password);
             User curr = Db.Users.Get(u => u.NickName == user.NickName).LastOrDefault();
             if(curr != null)
