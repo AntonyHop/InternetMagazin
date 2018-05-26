@@ -2,6 +2,8 @@
 using System;
 using InternetMagazine.PL.Interfaces;
 using InternetMagazine.PL.Services;
+using System.Web.Http.Dependencies;
+using Ninject;
 
 namespace InternetMagazine.Util
 {
@@ -13,6 +15,22 @@ namespace InternetMagazine.Util
             Bind<IUserService>().To<UserService>();
             Bind<IOrderService>().To<OrderService>();
             Bind<IStatService>().To<StatServcie>();
+        }
+    }
+
+    public class NinjectDependencyResolver : NinjectDependencyScope, IDependencyResolver, System.Web.Mvc.IDependencyResolver
+    {
+        private readonly IKernel kernel;
+
+        public NinjectDependencyResolver(IKernel kernel)
+            : base(kernel)
+        {
+            this.kernel = kernel;
+        }
+
+        public IDependencyScope BeginScope()
+        {
+            return new NinjectDependencyScope(this.kernel.BeginBlock());
         }
     }
 } 
