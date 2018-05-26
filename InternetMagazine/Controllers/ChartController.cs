@@ -96,6 +96,10 @@ namespace InternetMagazine.Controllers
 
         public ActionResult Orders()
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Moder") || u == null)
+                return Redirect("/Home/Error");
+
             IEnumerable<OrderItemDTO> orders = null;
             try
             {
@@ -111,6 +115,10 @@ namespace InternetMagazine.Controllers
 
         public ActionResult RemoveOrder(int id)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Moder") || u == null)
+                return Redirect("/Home/Error");
+
             try
             {
                 ord.Delete(id);

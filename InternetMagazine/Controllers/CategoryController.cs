@@ -37,7 +37,11 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult Categories(int id, string name, string mode)
         {
-            if(mode == "add"){
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Content("no");
+
+            if (mode == "add"){
                 try{
                     CSvc.AddCategory(name);
                 }catch(ValidationException ex){
@@ -74,6 +78,10 @@ namespace InternetMagazine.Controllers
 
         public ActionResult CreateProduct()
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Redirect("/Home/Error");
+
             var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.Edit = false;
@@ -83,6 +91,10 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult CreateProduct(ProductViewModel view)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Redirect("/Home/Error");
+
             var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.CurrId = 1;
@@ -113,6 +125,10 @@ namespace InternetMagazine.Controllers
         [HttpGet]
         public ActionResult RemoveProduct(int? id)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Content("Товар не удален нет прав");
+
             if (id != null)
             {
                 try {
@@ -129,6 +145,10 @@ namespace InternetMagazine.Controllers
 
         public ActionResult EditProduct(int? id)
         {
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Redirect("/Home/Error");
+
             var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.Edit = true;
@@ -154,6 +174,11 @@ namespace InternetMagazine.Controllers
         [HttpPost]
         public ActionResult EditProduct(ProductViewModel model)
         {
+
+            UserDTO u = (UserDTO)Session["user"];
+            if ((u.Role != "Admin" && u.Role != "Menager") || u == null)
+                return Redirect("/Home/Error");
+
             var ct = map.Map<IEnumerable<CategoryDTO>, List<CategoryViewModel>>(categories);
             ViewBag.categories = ct;
             ViewBag.CurrId = model.Id;

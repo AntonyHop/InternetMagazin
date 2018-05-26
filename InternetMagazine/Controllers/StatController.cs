@@ -1,4 +1,5 @@
-﻿using InternetMagazine.PL.Interfaces;
+﻿using InternetMagazine.PL.DTO;
+using InternetMagazine.PL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace InternetMagazine.Controllers
         // GET: Stat
         public ActionResult Index()
         {
+
+            UserDTO u = (UserDTO)Session["user"];
+            if (u.Role != "Admin" || u == null)
+                return Redirect("/Home/Error");
+
             ViewBag.CountProducts = stat.CountProducts();
             ViewBag.CountOrders = stat.CountOrders();
             ViewBag.CountCategories = stat.CountCategories();
