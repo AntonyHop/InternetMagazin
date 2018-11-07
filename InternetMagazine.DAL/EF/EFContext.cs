@@ -25,15 +25,17 @@ namespace InternetMagazine.DAL.EF
     public class DataInitalizer : DropCreateDatabaseIfModelChanges<EFContext> {
         protected override void Seed(EFContext context)
         {
-            context.Users.Add(new User { NickName = "Admin", Password= "3b2077ec209a4a5d5b0d3c7d154e4cc5",Age=21, FirstName="Anton" });//AdminRoot
+            context.Users.Add(new User { NickName = "Admin", Password= "338801db67c8ef85b413aecf10f2cacf", Age=21, FirstName="Anton" });//AdminRoot
             context.SaveChanges();
 
             context.Categories.Add(new Category { Name = "Без Ктегории" });
-            context.Categories.Add(new Category { Name = "Фантастика" });
+            context.Categories.Add(new Category { Name = "Пастилки" });
+            context.Categories.Add(new Category { Name = "Спрей" });
+            context.Categories.Add(new Category { Name = "Таблетки" });
             context.SaveChanges();
 
-            context.Products.Add(new Product { Name="Метро 2033", Desc="Постапокалиптический роман",CategoryId = 2,Price=200M });
-            context.Products.Add(new Product { Name = "Метро 2034", Desc = "Постапокалиптический роман", CategoryId = 2, Price = 250M });
+            context.Products.Add(new Product { Name="Доктор Мом", Desc="Просто таблетки которые пастилки",CategoryId = 2,Price=200M });
+            context.Products.Add(new Product { Name = "Стрепсилс", Desc = "Просто таблетки которые пастилки", CategoryId = 2, Price = 250M });
             context.SaveChanges();
 
         }

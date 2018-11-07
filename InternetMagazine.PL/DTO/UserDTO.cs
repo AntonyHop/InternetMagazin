@@ -23,5 +23,10 @@ namespace InternetMagazine.PL.DTO
         public string Mobule { get; set; }
 
         public string Role { get; set; }
+
+
+        public override string ToString() {
+            return this.FirstName + this.LastName;
+        }
     }
 }

@@ -21,5 +21,10 @@ namespace InternetMagazine.PL.DTO
         public string ImgUrl { get; set; }
 
         public int CountOfpay { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name +" "+ this.Price;
+        }
     }
 }

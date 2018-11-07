@@ -106,6 +106,7 @@ namespace InternetMagazine.PL.Services
 
         public bool LoginVerify(string username, string passwort)
         {
+            Console.WriteLine(Crypt.GetMd5Hash(passwort));
             User curr = Db.Users.Get(u => u.NickName == username).FirstOrDefault();
             if (curr == null)
             {
